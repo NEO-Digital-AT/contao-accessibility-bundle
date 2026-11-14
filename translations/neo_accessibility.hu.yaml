@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Akadálymentesítési beállítások"
+    label_active: "Akadálymentesítési beállítások, bekapcsolva: {count}"
+link:
+    label: "Akadálymentesítési beállítások"
+panel:
+    title: "Akadálymentesség"
+    description: "Itt módosíthatja a weboldal megjelenítését."
+    close: "Bezárás"
+profiles:
+    title: "Gyorsválasztás"
+    description: "Mindegyik egyszerre több beállítást kapcsol be. Ha újra kiválasztja, kikapcsolja őket."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Gyengénlátás"
+        description: "Nagyobb betű, nagy kontraszt, nagy egérmutató és jól látható keret a billentyűzethez."
+    dyslexia:
+        label: "Diszlexia"
+        description: "Diszlexiásoknak készült betűtípus, nagyobb térköz és balra igazított szöveg."
+    concentration:
+        label: "Koncentráció"
+        description: "Leállítja az animációkat, és mindent elsötétít az éppen olvasott sorokon kívül."
+    epilepsy:
+        label: "Epilepszia"
+        description: "Leállítja az animációkat és a mozgó képeket, és halványabbá teszi a színeket."
+    motor:
+        label: "Motorika"
+        description: "Nagy egérmutató és jól látható keret a billentyűzetes használathoz."
+    reader:
+        label: "Felolvasás"
+        description: "Kattintson egy szövegre, és meghallgathatja."
+group:
+    text: "Szöveg és tartalom"
+    colour: "Színek"
+    orientation: "Tájékozódás"
+font:
+    label: "Betűméret"
+    description: "A szöveg nagyítása legfeljebb 150%-ra."
+    decrease: "Kisebb betű"
+    increase: "Nagyobb betű"
+    value: "{value}%"
+    status: "Betűméret: {value}"
+typeface:
+    label: "Olvasható betűtípus"
+    description: "Egyszerű, tiszta betűtípus az eszközéről."
+dyslexia:
+    label: "Diszlexiás betűtípus"
+    description: "Olyan betűtípus, amelyben a betűk könnyebben megkülönböztethetők."
+readable:
+    label: "Nagyobb térköz"
+    description: "Nagyobb térköz a sorok, a betűk és a szavak között."
+align:
+    label: "Balra igazított szöveg"
+    description: "Nincs középre zárt vagy sorkizárt szöveg, nincs elválasztás."
+headings:
+    label: "Címsorok kiemelése"
+    description: "Keret minden címsor körül."
+links:
+    label: "Linkek kiemelése"
+    description: "Aláhúzott linkek és bekeretezett gombok."
+noimages:
+    label: "Képek elrejtése"
+    description: "A képek eltűnnek, helyettük a leírásuk jelenik meg."
+    alt: "Kép: {alt}"
+cursor:
+    label: "Nagy egérmutató"
+    description: "Nagyobb, jobban látható egérmutató."
+contrast:
+    label: "Nagy kontraszt"
+    description: "Fekete szöveg fehér háttéren, aláhúzott linkek."
+lowcontrast:
+    label: "Kisebb kontraszt"
+    description: "Lágyabb, kicsit sötétebb színek, amelyek kevésbé vakítanak."
+lowsaturation:
+    label: "Halványabb színek"
+    description: "A színek halványabb megjelenítése."
+grayscale:
+    label: "Szürkeárnyalat"
+    description: "Az oldal megjelenítése színek nélkül."
+motion:
+    label: "Animációk leállítása"
+    description: "Az animációk, a mozgó effektusok és a magától induló videók leállítása."
+focus:
+    label: "Erős fókusz"
+    description: "Jól látható keret mutatja, hol tart éppen a billentyűzettel."
+guide:
+    label: "Olvasóvonal"
+    description: "Egy vonal követi az egérmutatót vagy a billentyűzetet, és segít a sorban maradni."
+mask:
+    label: "Olvasómaszk"
+    description: "Elsötétíti az oldalt, csak egy sáv marad világos az egérmutató vagy a billentyűzet körül."
+structure:
+    label: "Oldalszerkezet"
+    description: "Az oldal területei és címsorai. Válasszon egyet, és odaugrik."
+    areas: "Területek"
+    headings: "Címsorok"
+    empty: "Ezen az oldalon nincs."
+    level: "{level}. szint"
+landmark:
+    banner: "Fejléc"
+    navigation: "Navigáció"
+    main: "Fő tartalom"
+    complementary: "Kiegészítő információk"
+    contentinfo: "Lábléc"
+    search: "Keresés"
+    form: "Űrlap"
+    region: "Szakasz"
+speak:
+    label: "Felolvasás"
+    description: "Kattintson egy szövegre, hogy meghallgassa; egy hivatkozást vagy gombot az első kattintás felolvas, a második használ. A Tab billentyűvel mindent felolvas, amire rálép."
+    note: "Az eszközére telepített hangot használja. A szöveg az eszközén marad."
+    note_online: "A böngésző hangjait használja. Ha az eszközön nincs hang az adott nyelvhez, egyes böngészők a felolvasáshoz elküldik a szöveget a gyártójuk online szolgáltatásának."
+    no_voice: "Ezen az eszközön nincs telepítve hang ehhez a nyelvhez: {language}."
+    no_voice_browser: "Ennek a böngészőnek nincs hangja ehhez a nyelvhez: {language}."
+    no_speech: "Ez a böngésző nem tud felolvasni."
+    page: "Oldal felolvasása"
+    pause: "Szünet"
+    resume: "Folytatás"
+    stop: "Leállítás"
+    reading: "Felolvasás folyamatban."
+    paused: "Szüneteltetve."
+    stopped: "A felolvasás leállt."
+    empty: "Ezen az oldalon nincs felolvasható szöveg."
+    again: "A használathoz kattintson vagy koppintson még egyszer."
+status:
+    on: "{label}: bekapcsolva."
+    off: "{label}: kikapcsolva."
+    replaced: "Kikapcsolva: {label}."
+footer:
+    reset: "Minden visszaállítása"
+    reset_done: "Minden beállítás vissza lett állítva."
+    statement: "Akadálymentességi nyilatkozat"
+    cookies: "Sütibeállítások"

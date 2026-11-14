@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Ustawienia dostępności"
+    label_active: "Ustawienia dostępności, włączone: {count}"
+link:
+    label: "Ustawienia dostępności"
+panel:
+    title: "Dostępność"
+    description: "Tutaj można dostosować wygląd tej strony internetowej."
+    close: "Zamknij"
+profiles:
+    title: "Szybki wybór"
+    description: "Każda opcja włącza kilka ustawień naraz. Ponowny wybór je wyłącza."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Słabe widzenie"
+        description: "Większy tekst, wysoki kontrast, duży wskaźnik myszy i wyraźna ramka przy obsłudze klawiaturą."
+    dyslexia:
+        label: "Dysleksja"
+        description: "Czcionka dla osób z dysleksją, większe odstępy i tekst wyrównany do lewej."
+    concentration:
+        label: "Koncentracja"
+        description: "Zatrzymuje animacje i przyciemnia wszystko poza czytanymi wierszami."
+    epilepsy:
+        label: "Padaczka"
+        description: "Zatrzymuje animacje i ruchome obrazy oraz sprawia, że kolory są bledsze."
+    motor:
+        label: "Motoryka"
+        description: "Duży wskaźnik myszy i wyraźna ramka przy obsłudze klawiaturą."
+    reader:
+        label: "Czytanie na głos"
+        description: "Kliknięcie tekstu odczytuje go na głos."
+group:
+    text: "Tekst i treść"
+    colour: "Kolory"
+    orientation: "Orientacja"
+font:
+    label: "Rozmiar tekstu"
+    description: "Powiększenie tekstu do 150%."
+    decrease: "Mniejszy tekst"
+    increase: "Większy tekst"
+    value: "{value}%"
+    status: "Rozmiar tekstu: {value}"
+typeface:
+    label: "Czytelna czcionka"
+    description: "Prosta, wyraźna czcionka z urządzenia."
+dyslexia:
+    label: "Czcionka dla dyslektyków"
+    description: "Czcionka, w której litery łatwiej odróżnić."
+readable:
+    label: "Większe odstępy"
+    description: "Większe odstępy między wierszami, literami i słowami."
+align:
+    label: "Tekst do lewej"
+    description: "Bez wyśrodkowania i justowania, bez dzielenia wyrazów."
+headings:
+    label: "Wyróżnienie nagłówków"
+    description: "Ramka wokół każdego nagłówka."
+links:
+    label: "Wyróżnienie linków"
+    description: "Podkreślone linki i obramowane przyciski."
+noimages:
+    label: "Ukrycie obrazów"
+    description: "Obrazy znikają, a w ich miejscu pojawia się ich opis."
+    alt: "Obraz: {alt}"
+cursor:
+    label: "Duży kursor"
+    description: "Większy, lepiej widoczny wskaźnik myszy."
+contrast:
+    label: "Wysoki kontrast"
+    description: "Czarny tekst na białym tle, podkreślone linki."
+lowcontrast:
+    label: "Mniejszy kontrast"
+    description: "Łagodniejsze, nieco ciemniejsze kolory, które mniej rażą."
+lowsaturation:
+    label: "Słabsze kolory"
+    description: "Bledsze kolory."
+grayscale:
+    label: "Odcienie szarości"
+    description: "Wyświetlanie strony bez kolorów."
+motion:
+    label: "Zatrzymanie animacji"
+    description: "Zatrzymanie animacji, efektów ruchu i filmów odtwarzanych automatycznie."
+focus:
+    label: "Wyraźny fokus"
+    description: "Wyraźna ramka pokazuje aktualne miejsce podczas obsługi klawiaturą."
+guide:
+    label: "Linijka do czytania"
+    description: "Linia podąża za wskaźnikiem myszy lub klawiaturą i pomaga nie zgubić wiersza."
+mask:
+    label: "Maska do czytania"
+    description: "Przyciemnia stronę poza pasem wokół wskaźnika myszy lub klawiatury."
+structure:
+    label: "Struktura strony"
+    description: "Obszary i nagłówki tej strony. Wybór przenosi w to miejsce."
+    areas: "Obszary"
+    headings: "Nagłówki"
+    empty: "Brak na tej stronie."
+    level: "Poziom {level}"
+landmark:
+    banner: "Nagłówek strony"
+    navigation: "Nawigacja"
+    main: "Treść główna"
+    complementary: "Informacje dodatkowe"
+    contentinfo: "Stopka"
+    search: "Wyszukiwanie"
+    form: "Formularz"
+    region: "Sekcja"
+speak:
+    label: "Czytanie na głos"
+    description: "Aby usłyszeć tekst, należy go kliknąć; link lub przycisk jest czytany przy pierwszym kliknięciu, a używany przy drugim. Klawiszem Tab czytane jest wszystko, do czego się przejdzie."
+    note: "Korzysta z głosu zainstalowanego na urządzeniu. Tekst pozostaje na urządzeniu."
+    note_online: "Korzysta z głosów przeglądarki. Jeśli urządzenie nie ma głosu dla danego języka, niektóre przeglądarki wysyłają tekst do usługi online swojego producenta, aby go odczytać."
+    no_voice: "Na tym urządzeniu nie zainstalowano głosu dla języka: {language}."
+    no_voice_browser: "Ta przeglądarka nie ma głosu dla języka: {language}."
+    no_speech: "Ta przeglądarka nie potrafi czytać na głos."
+    page: "Czytaj stronę"
+    pause: "Pauza"
+    resume: "Dalej"
+    stop: "Zatrzymaj"
+    reading: "Trwa czytanie."
+    paused: "Wstrzymano."
+    stopped: "Zakończono czytanie."
+    empty: "Na tej stronie nie ma tekstu do przeczytania."
+    again: "Aby tego użyć, należy kliknąć lub dotknąć jeszcze raz."
+status:
+    on: "{label}: włączone."
+    off: "{label}: wyłączone."
+    replaced: "Wyłączono: {label}."
+footer:
+    reset: "Resetuj wszystko"
+    reset_done: "Wszystkie ustawienia zostały zresetowane."
+    statement: "Deklaracja dostępności"
+    cookies: "Ustawienia plików cookie"

@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Accessibility settings"
+    label_active: "Accessibility settings, {count} switched on"
+link:
+    label: "Accessibility settings"
+panel:
+    title: "Accessibility"
+    description: "Adjust how this website is displayed."
+    close: "Close"
+profiles:
+    title: "Quick options"
+    description: "Each one switches on several settings at once. Choose it again to switch them off."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Low vision"
+        description: "Larger text, high contrast, a large mouse pointer and a clear keyboard frame."
+    dyslexia:
+        label: "Dyslexia"
+        description: "A font for dyslexia, more spacing and text aligned to the left."
+    concentration:
+        label: "Concentration"
+        description: "Stops animations and darkens everything except the lines you are reading."
+    epilepsy:
+        label: "Epilepsy"
+        description: "Stops animations and moving images and makes colours paler."
+    motor:
+        label: "Motor skills"
+        description: "A large mouse pointer and a clear frame for keyboard use."
+    reader:
+        label: "Read aloud"
+        description: "Click a text to hear it."
+group:
+    text: "Text and content"
+    colour: "Colours"
+    orientation: "Orientation"
+font:
+    label: "Text size"
+    description: "Make the text larger, up to 150%."
+    decrease: "Smaller text"
+    increase: "Larger text"
+    value: "{value}%"
+    status: "Text size: {value}"
+typeface:
+    label: "Readable font"
+    description: "A plain, clear font from your device."
+dyslexia:
+    label: "Dyslexia font"
+    description: "A font whose letters are easier to tell apart."
+readable:
+    label: "More spacing"
+    description: "More space between lines, letters and words."
+align:
+    label: "Align text left"
+    description: "No centred or justified text, no split words."
+headings:
+    label: "Highlight headings"
+    description: "A frame around every heading."
+links:
+    label: "Highlight links"
+    description: "Underline links and outline buttons."
+noimages:
+    label: "Hide images"
+    description: "Images disappear; their description is shown instead."
+    alt: "Image: {alt}"
+cursor:
+    label: "Large cursor"
+    description: "A larger mouse pointer that is easier to see."
+contrast:
+    label: "High contrast"
+    description: "Black text on a white background, links underlined."
+lowcontrast:
+    label: "Reduce contrast"
+    description: "Softer, slightly darker colours that glare less."
+lowsaturation:
+    label: "Reduce colours"
+    description: "Show the colours paler."
+grayscale:
+    label: "Greyscale"
+    description: "Show the page without colours."
+motion:
+    label: "Stop animations"
+    description: "Stop animations, moving effects and videos that play by themselves."
+focus:
+    label: "Strong focus"
+    description: "A clear frame shows where you are when you use the keyboard."
+guide:
+    label: "Reading guide"
+    description: "A line follows the mouse pointer or the keyboard and helps you keep your place."
+mask:
+    label: "Reading mask"
+    description: "Darkens the page except for a strip around the mouse pointer or the keyboard."
+structure:
+    label: "Page structure"
+    description: "Areas and headings of this page. Choose one to go there."
+    areas: "Areas"
+    headings: "Headings"
+    empty: "None on this page."
+    level: "Level {level}"
+landmark:
+    banner: "Header"
+    navigation: "Navigation"
+    main: "Main content"
+    complementary: "Additional information"
+    contentinfo: "Footer"
+    search: "Search"
+    form: "Form"
+    region: "Section"
+speak:
+    label: "Read aloud"
+    description: "Click a text to hear it; a link or button is read on the first click and used on the second. With the Tab key, everything is read when you reach it."
+    note: "Uses a voice installed on your device. The text stays on your device."
+    note_online: "Uses the voices of your browser. Where your device has none for the language, some browsers send the text to an online service of their maker to read it out."
+    no_voice: "No voice for {language} is installed on this device."
+    no_voice_browser: "This browser has no voice for {language}."
+    no_speech: "This browser cannot read aloud."
+    page: "Read page"
+    pause: "Pause"
+    resume: "Continue"
+    stop: "Stop"
+    reading: "Reading aloud."
+    paused: "Paused."
+    stopped: "Stopped reading."
+    empty: "There is no text to read on this page."
+    again: "Click or tap again to use it."
+status:
+    on: "{label}: switched on."
+    off: "{label}: switched off."
+    replaced: "{label} was switched off."
+footer:
+    reset: "Reset all"
+    reset_done: "All settings have been reset."
+    statement: "Accessibility statement"
+    cookies: "Cookie settings"

@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Ajustes de accesibilidad"
+    label_active: "Ajustes de accesibilidad, activados: {count}"
+link:
+    label: "Ajustes de accesibilidad"
+panel:
+    title: "Accesibilidad"
+    description: "Ajuste la visualización de este sitio web."
+    close: "Cerrar"
+profiles:
+    title: "Opciones rápidas"
+    description: "Cada una activa varios ajustes a la vez. Elíjala de nuevo para desactivarlos."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Baja visión"
+        description: "Texto más grande, alto contraste, puntero del ratón grande y un marco claro para el teclado."
+    dyslexia:
+        label: "Dislexia"
+        description: "Una fuente para la dislexia, más espacio y texto alineado a la izquierda."
+    concentration:
+        label: "Concentración"
+        description: "Detiene las animaciones y oscurece todo excepto las líneas que está leyendo."
+    epilepsy:
+        label: "Epilepsia"
+        description: "Detiene las animaciones y las imágenes en movimiento y hace los colores más pálidos."
+    motor:
+        label: "Motricidad"
+        description: "Un puntero del ratón grande y un marco claro para usar el teclado."
+    reader:
+        label: "Lectura en voz alta"
+        description: "Haga clic en un texto para escucharlo."
+group:
+    text: "Texto y contenido"
+    colour: "Colores"
+    orientation: "Orientación"
+font:
+    label: "Tamaño del texto"
+    description: "Aumentar el texto hasta el 150\u00A0%."
+    decrease: "Texto más pequeño"
+    increase: "Texto más grande"
+    value: "{value}\u00A0%"
+    status: "Tamaño del texto: {value}"
+typeface:
+    label: "Fuente legible"
+    description: "Una fuente sencilla y clara de su dispositivo."
+dyslexia:
+    label: "Fuente para la dislexia"
+    description: "Una fuente con letras más fáciles de distinguir."
+readable:
+    label: "Más espacio"
+    description: "Más espacio entre líneas, letras y palabras."
+align:
+    label: "Alinear a la izquierda"
+    description: "Sin texto centrado ni justificado, sin palabras cortadas."
+headings:
+    label: "Resaltar títulos"
+    description: "Un marco alrededor de cada título."
+links:
+    label: "Resaltar enlaces"
+    description: "Subrayar los enlaces y enmarcar los botones."
+noimages:
+    label: "Ocultar imágenes"
+    description: "Las imágenes desaparecen; en su lugar se muestra su descripción."
+    alt: "Imagen: {alt}"
+cursor:
+    label: "Cursor grande"
+    description: "Un puntero del ratón más grande y más fácil de ver."
+contrast:
+    label: "Alto contraste"
+    description: "Texto negro sobre fondo blanco, enlaces subrayados."
+lowcontrast:
+    label: "Reducir el contraste"
+    description: "Colores más suaves y algo más oscuros que deslumbran menos."
+lowsaturation:
+    label: "Atenuar los colores"
+    description: "Mostrar los colores más pálidos."
+grayscale:
+    label: "Escala de grises"
+    description: "Mostrar la página sin colores."
+motion:
+    label: "Detener animaciones"
+    description: "Detener animaciones, efectos de movimiento y vídeos que se reproducen solos."
+focus:
+    label: "Foco reforzado"
+    description: "Un marco claro muestra dónde se encuentra cuando usa el teclado."
+guide:
+    label: "Guía de lectura"
+    description: "Una línea sigue al puntero del ratón o al teclado y le ayuda a no perder la línea."
+mask:
+    label: "Máscara de lectura"
+    description: "Oscurece la página excepto una franja alrededor del puntero del ratón o del teclado."
+structure:
+    label: "Estructura de la página"
+    description: "Zonas y títulos de esta página. Elija uno para ir allí."
+    areas: "Zonas"
+    headings: "Títulos"
+    empty: "Ninguno en esta página."
+    level: "Nivel {level}"
+landmark:
+    banner: "Encabezado"
+    navigation: "Navegación"
+    main: "Contenido principal"
+    complementary: "Información adicional"
+    contentinfo: "Pie de página"
+    search: "Búsqueda"
+    form: "Formulario"
+    region: "Sección"
+speak:
+    label: "Lectura en voz alta"
+    description: "Haga clic en un texto para escucharlo; un enlace o un botón se lee con el primer clic y se usa con el segundo. Con la tecla Tab se lee todo lo que alcance."
+    note: "Usa una voz instalada en su dispositivo. El texto se queda en su dispositivo."
+    note_online: "Usa las voces de su navegador. Si su dispositivo no tiene ninguna para el idioma, algunos navegadores envían el texto a un servicio en línea de su fabricante para leerlo."
+    no_voice: "En este dispositivo no hay ninguna voz instalada para este idioma: {language}."
+    no_voice_browser: "Este navegador no tiene ninguna voz para este idioma: {language}."
+    no_speech: "Este navegador no puede leer en voz alta."
+    page: "Leer la página"
+    pause: "Pausa"
+    resume: "Continuar"
+    stop: "Detener"
+    reading: "Leyendo en voz alta."
+    paused: "En pausa."
+    stopped: "Lectura detenida."
+    empty: "En esta página no hay texto para leer."
+    again: "Haga clic o toque otra vez para usarlo."
+status:
+    on: "Opción «{label}» activada."
+    off: "Opción «{label}» desactivada."
+    replaced: "Se ha desactivado «{label}»."
+footer:
+    reset: "Restablecer todo"
+    reset_done: "Se han restablecido todos los ajustes."
+    statement: "Declaración de accesibilidad"
+    cookies: "Ajustes de cookies"

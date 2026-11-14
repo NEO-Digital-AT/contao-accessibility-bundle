@@ -1,0 +1,1368 @@
+/*
+ * NEO Accessibility — accessibility panel and display effects.
+ *
+ * Part 1: default values of all CSS variables (--nax-*). They sit on :where(:root)
+ *         (zero specificity), so a website overrides them on :root or on .nax.
+ * Part 2: the panel (.nax…), neutral design, every colour from a variable.
+ * Part 3: the effects on html[data-a11y-*], generic so they work on any website.
+ *         All effect rules are wrapped in :where() and therefore have zero
+ *         specificity: a website adjusts an effect with its own rule under the
+ *         same attribute plus !important (see README, "Customising").
+ */
+
+/* ---------------------------------------------------------------------------
+ * 1. Variables
+ * ------------------------------------------------------------------------- */
+
+:where(:root) {
+  /* Panel and button */
+  --nax-font-size: 1rem;
+  --nax-bg: #ffffff;
+  --nax-text: #1a1a1a;
+  --nax-muted: #4d4d4d;
+  --nax-border: #767676;
+  --nax-divider: #d9d9d9;
+  --nax-hover: #f0f0f0;
+  --nax-accent: #1a1a1a;
+  --nax-on-accent: #ffffff;
+  --nax-focus: #1a1a1a;
+  --nax-radius: 12px;
+  --nax-control-radius: 8px;
+  --nax-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  --nax-panel-width: 23rem;
+  --nax-panel-gap: 12px;
+  --nax-drawer-width: 24rem;
+  --nax-center-width: 32rem;
+  --nax-overlay: rgba(0, 0, 0, 0.45);
+  --nax-toggle-size: 56px;
+  --nax-toggle-bg: #1a1a1a;
+  --nax-toggle-hover: #404040;
+  --nax-toggle-color: #ffffff;
+  --nax-toggle-ring: #ffffff;
+  --nax-offset-x: 16px;
+  --nax-offset-y: 16px;
+  --nax-z-index: 9000;
+
+  /* Effects on the page */
+  --nax-font-base: 100%;
+  --nax-focus-color: #000000;
+  --nax-focus-halo: #ffffff;
+  --nax-mark-color: #c45500;
+  --nax-contrast-text: #000000;
+  --nax-contrast-muted: #4d4d4d;
+  --nax-contrast-bg: #ffffff;
+  --nax-contrast-link: #0000cc;
+  --nax-contrast-border: #000000;
+  /* Readable font: fonts of the device, nothing is downloaded. */
+  --nax-readable-font: Verdana, Tahoma, "Segoe UI", "DejaVu Sans", "Noto Sans", Arial, sans-serif;
+  /* Dyslexia font: bundled, fetched only when the setting is on. */
+  --nax-dyslexia-font: "OpenDyslexic", Verdana, Tahoma, "Segoe UI", Arial, sans-serif;
+  --nax-lowcontrast-filter: brightness(0.92) contrast(0.8);
+  --nax-lowsaturation-filter: saturate(0.4);
+  --nax-guide-color: #1a1a1a;
+  --nax-guide-halo: #ffffff;
+  --nax-guide-size: 6px;
+  --nax-mask-color: rgba(0, 0, 0, 0.6);
+  --nax-mask-band: 7rem;
+  --nax-reading-bg: #ffe066;
+  --nax-reading-text: #000000;
+  --nax-reading-outline: #1a1a1a;
+}
+
+/* ---------------------------------------------------------------------------
+ * 2. Panel
+ *    The widget is moved to the end of <body> by the script. Class selectors
+ *    with .nax in front keep plain element rules of the website (button, a,
+ *    span …) out of it.
+ * ------------------------------------------------------------------------- */
+
+.nax {
+  position: fixed;
+  z-index: var(--nax-z-index);
+  font-family: var(--nax-font-family);
+  font-size: var(--nax-font-size);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  overflow-wrap: break-word;
+  color: var(--nax-text);
+}
+
+/* Baseline for the widget's own elements: plain element rules of the website
+   (e.g. "button { text-transform: uppercase }", "span { letter-spacing: 2px }")
+   apply directly and would beat inheritance. The class rules below set what
+   each part needs and win over this baseline. */
+.nax div,
+.nax span,
+.nax a,
+.nax button,
+.nax h2,
+.nax h3,
+.nax h4,
+.nax p,
+.nax ul,
+.nax li {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: inherit;
+  white-space: inherit;
+  float: none;
+  list-style: none;
+  transition: none;
+  animation: none;
+}
+
+.nax button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Corner of the floating button. Without a button ("no-button") the widget
+   keeps the bottom left corner, where a popover panel then appears.
+   --neo-dock-x/-y: the buttons at the edge of the screen of NEO Basic move the
+   widget away from the edges, in a stack beside the buttons of other
+   extensions, in the menu onto the settings button (its panel then opens
+   next to that button; the floating button is hidden). */
+.nax--bottom-left,
+.nax--bottom-right,
+.nax--no-button {
+  bottom: calc(var(--nax-offset-y) + var(--neo-dock-y, 0px) + env(safe-area-inset-bottom, 0px));
+}
+
+.nax--top-left,
+.nax--top-right {
+  top: calc(var(--nax-offset-y) + var(--neo-dock-y, 0px) + env(safe-area-inset-top, 0px));
+}
+
+.nax--bottom-left,
+.nax--top-left,
+.nax--no-button {
+  left: calc(var(--nax-offset-x) + var(--neo-dock-x, 0px) + env(safe-area-inset-left, 0px));
+}
+
+.nax--bottom-right,
+.nax--top-right {
+  right: calc(var(--nax-offset-x) + var(--neo-dock-x, 0px) + env(safe-area-inset-right, 0px));
+}
+
+.nax[hidden],
+.nax [hidden] {
+  display: none !important;
+}
+
+.nax *,
+.nax *::before,
+.nax *::after {
+  box-sizing: border-box;
+}
+
+/* Icons: stroke drawings, coloured by the text colour. */
+.nax .nax__svg {
+  display: block;
+  flex: none;
+  width: 1.5em;
+  height: 1.5em;
+  overflow: visible;
+}
+
+.nax .nax__svg,
+.nax .nax__svg * {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nax .nax__svg .nax__fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Text for screen readers only. */
+.nax .nax__sr {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -- Floating button -------------------------------------------------------- */
+
+.nax .nax__toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--nax-toggle-size);
+  height: var(--nax-toggle-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--nax-toggle-bg);
+  color: var(--nax-toggle-color);
+  /* The light ring keeps the dark button visible on dark pages. */
+  box-shadow: 0 0 0 2px var(--nax-toggle-ring), var(--nax-shadow);
+  font: inherit;
+  cursor: pointer;
+}
+
+.nax .nax__toggle:hover {
+  background: var(--nax-toggle-hover);
+}
+
+.nax .nax__toggle-icon,
+.nax .nax__toggle-close {
+  display: flex;
+}
+
+.nax .nax__toggle .nax__svg {
+  width: calc(var(--nax-toggle-size) * 0.55);
+  height: calc(var(--nax-toggle-size) * 0.55);
+}
+
+.nax .nax__toggle-close,
+.nax .nax__toggle[aria-expanded="true"] .nax__toggle-icon {
+  display: none;
+}
+
+.nax .nax__toggle[aria-expanded="true"] .nax__toggle-close {
+  display: flex;
+}
+
+/* Counter on the button: how many settings are on. The button's label says
+   the same for screen readers, so the number itself is hidden from them. */
+.nax .nax__badge {
+  display: none;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.3125rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--nax-toggle-bg);
+  border-radius: 999px;
+  background: var(--nax-badge-bg, var(--nax-toggle-color));
+  color: var(--nax-badge-text, var(--nax-toggle-bg));
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.nax[data-nax-active]:not(.nax--open) .nax__badge {
+  display: flex;
+}
+
+/* -- Panel (dialog) ----------------------------------------------------------- */
+
+.nax .nax__panel {
+  display: block;
+  /* The whole panel scrolls: on a small screen with large text, a fixed head
+     and footer would leave almost no room for the settings. */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--nax-border);
+  border-radius: var(--nax-radius);
+  background: var(--nax-bg);
+  color: var(--nax-text);
+  box-shadow: var(--nax-shadow);
+  animation: nax-in 0.16s ease-out;
+}
+
+/* Layout "popover": next to the floating button, above it (bottom corners) or
+   below it (top corners). */
+.nax.nax--popover .nax__panel {
+  position: absolute;
+  bottom: calc(100% + var(--nax-panel-gap));
+  width: min(var(--nax-panel-width), calc(100vw - 2 * var(--nax-offset-x)));
+  max-height: calc(100vh - var(--nax-toggle-size) - var(--nax-panel-gap) - 2 * var(--nax-offset-y) - var(--neo-dock-y, 0px));
+  max-height: calc(100dvh - var(--nax-toggle-size) - var(--nax-panel-gap) - 2 * var(--nax-offset-y) - var(--neo-dock-y, 0px));
+}
+
+.nax.nax--bottom-left.nax--popover .nax__panel,
+.nax.nax--top-left.nax--popover .nax__panel,
+.nax.nax--no-button.nax--popover .nax__panel {
+  left: 0;
+}
+
+.nax.nax--bottom-right.nax--popover .nax__panel,
+.nax.nax--top-right.nax--popover .nax__panel {
+  right: 0;
+}
+
+.nax.nax--top-left.nax--popover .nax__panel,
+.nax.nax--top-right.nax--popover .nax__panel {
+  top: calc(100% + var(--nax-panel-gap));
+  bottom: auto;
+}
+
+.nax.nax--no-button.nax--popover .nax__panel {
+  bottom: 0;
+  max-height: calc(100vh - 2 * var(--nax-offset-y));
+  max-height: calc(100dvh - 2 * var(--nax-offset-y));
+}
+
+/* Layouts "drawer-left" / "drawer-right": full height at a side of the screen. */
+.nax.nax--drawer-left .nax__panel,
+.nax.nax--drawer-right .nax__panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: min(var(--nax-drawer-width), 100vw);
+  max-height: none;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+.nax.nax--drawer-left .nax__panel {
+  left: 0;
+  border-left: 0;
+  animation-name: nax-drawer-left;
+}
+
+.nax.nax--drawer-right .nax__panel {
+  right: 0;
+  border-right: 0;
+  animation-name: nax-drawer-right;
+}
+
+/* Layout "center": in the middle of the screen. "translate" is a property of
+   its own, so the opening animation (transform) does not undo the centring. */
+.nax.nax--center .nax__panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(var(--nax-center-width), calc(100vw - 2 * var(--nax-offset-x)));
+  max-height: calc(100vh - 2 * var(--nax-offset-y));
+  max-height: calc(100dvh - 2 * var(--nax-offset-y));
+  translate: -50% -50%;
+}
+
+/* Overlay: dimmed background behind a modal panel; a click on it closes the panel. */
+.nax .nax__backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--nax-overlay);
+  animation: nax-fade 0.16s ease-out;
+}
+
+@keyframes nax-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes nax-drawer-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes nax-drawer-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes nax-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nax .nax__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.75rem 0.625rem 1.25rem;
+  border-bottom: 1px solid var(--nax-divider);
+}
+
+.nax .nax__heading {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+  padding-top: 0.25rem;
+}
+
+.nax .nax__title,
+.nax .nax__label {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.nax .nax__title {
+  font-size: 1.125em;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--nax-text);
+}
+
+.nax .nax__subtitle {
+  font-size: 0.875em;
+  color: var(--nax-muted);
+}
+
+.nax .nax__close {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--nax-control-radius);
+  background: transparent;
+  color: var(--nax-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.nax .nax__close:hover {
+  background: var(--nax-hover);
+}
+
+.nax .nax__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.5rem;
+}
+
+/* One line per setting: icon, text, control. */
+.nax .nax__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: var(--nax-control-radius);
+  background: transparent;
+  color: var(--nax-text);
+  font: inherit;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.nax .nax__icon {
+  display: flex;
+  flex: none;
+  color: var(--nax-text);
+}
+
+.nax .nax__text {
+  display: flex;
+  flex: 1 1 7em;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.nax .nax__label {
+  font-weight: 600;
+}
+
+.nax .nax__desc {
+  font-size: 0.875em;
+  color: var(--nax-muted);
+}
+
+/* Switch rows: the whole row is the button. */
+.nax .nax__switch {
+  cursor: pointer;
+}
+
+.nax .nax__switch:hover {
+  background: var(--nax-hover);
+}
+
+.nax .nax__track {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 2.75rem;
+  height: 1.5rem;
+  border: 2px solid var(--nax-border);
+  border-radius: 999px;
+  background: var(--nax-bg);
+}
+
+.nax .nax__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(1.5rem - 8px);
+  height: calc(1.5rem - 8px);
+  border-radius: 50%;
+  background: var(--nax-border);
+  color: var(--nax-accent);
+  transition: transform 0.15s ease-out;
+}
+
+.nax .nax__knob .nax__svg {
+  width: 85%;
+  height: 85%;
+  visibility: hidden;
+}
+
+.nax .nax__knob .nax__svg * {
+  stroke-width: 3;
+}
+
+.nax .nax__switch[aria-checked="true"] .nax__track {
+  border-color: var(--nax-accent);
+  background: var(--nax-accent);
+}
+
+/* On: knob to the right, light, with a tick — not shown by colour alone. */
+.nax .nax__switch[aria-checked="true"] .nax__knob {
+  background: var(--nax-on-accent);
+  transform: translateX(1.25rem);
+}
+
+.nax .nax__switch[aria-checked="true"] .nax__knob .nax__svg {
+  visibility: visible;
+}
+
+/* Text size: A− / value / A+. On a narrow panel the buttons move below the text. */
+.nax .nax__row--font {
+  flex-wrap: wrap;
+}
+
+.nax .nax__stepper {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.375rem;
+  margin-left: auto;
+}
+
+.nax .nax__step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--nax-border);
+  border-radius: var(--nax-control-radius);
+  background: var(--nax-bg);
+  color: var(--nax-text);
+  font: inherit;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.nax .nax__step:hover {
+  background: var(--nax-hover);
+}
+
+.nax .nax__step[aria-disabled="true"] {
+  border-style: dashed;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nax .nax__step[aria-disabled="true"]:hover {
+  background: var(--nax-bg);
+}
+
+.nax .nax__value {
+  min-width: 3.25em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Groups: quick options, text and content, colours, orientation. */
+.nax .nax__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.25rem 0 0.375rem;
+}
+
+.nax .nax__group + .nax__group {
+  margin-top: 0.25rem;
+  padding-top: 0.625rem;
+  border-top: 1px solid var(--nax-divider);
+}
+
+.nax .nax__group-title {
+  display: block;
+  padding: 0.25rem 0.75rem 0.125rem;
+  font-size: 0.8125em;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--nax-muted);
+}
+
+.nax .nax__group-desc {
+  display: block;
+  padding: 0 0.75rem 0.375rem;
+  font-size: 0.8125em;
+  color: var(--nax-muted);
+}
+
+/* Quick options: as many columns as fit, at least two on a phone. */
+.nax .nax__profiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.25rem, 1fr));
+  gap: 0.375rem;
+  padding: 0 0.25rem 0.25rem;
+}
+
+.nax .nax__profile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 0;
+  min-height: 4.75rem;
+  padding: 0.625rem 0.375rem;
+  border: 2px solid var(--nax-border);
+  border-radius: var(--nax-control-radius);
+  background: var(--nax-bg);
+  color: var(--nax-text);
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.nax .nax__profile-label {
+  max-width: 100%;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.nax .nax__profile:hover {
+  background: var(--nax-hover);
+}
+
+/* Pressed: filled, with a tick — not shown by colour alone. */
+.nax .nax__profile[aria-pressed="true"],
+.nax .nax__profile[aria-pressed="true"]:hover {
+  border-color: var(--nax-accent);
+  background: var(--nax-accent);
+  color: var(--nax-on-accent);
+}
+
+.nax .nax__profile-check {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  display: none;
+}
+
+.nax .nax__profile-check .nax__svg {
+  width: 1.125em;
+  height: 1.125em;
+}
+
+.nax .nax__profile-check .nax__svg * {
+  stroke-width: 3;
+}
+
+.nax .nax__profile[aria-pressed="true"] .nax__profile-check {
+  display: flex;
+}
+
+/* Note under a setting (read aloud: which voices it uses). */
+.nax .nax__note {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.8125em;
+  color: var(--nax-muted);
+}
+
+/* A setting or quick option that cannot be used here (read aloud without a
+   suitable voice): dimmed, dashed, not clickable; the reason stands next to
+   it in full contrast. */
+.nax .nax__switch[aria-disabled="true"],
+.nax .nax__profile[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.nax .nax__switch[aria-disabled="true"]:hover {
+  background: transparent;
+}
+
+.nax .nax__switch[aria-disabled="true"] .nax__icon,
+.nax .nax__switch[aria-disabled="true"] .nax__track,
+.nax .nax__profile[aria-disabled="true"] .nax__profile-icon {
+  opacity: 0.5;
+}
+
+.nax .nax__switch[aria-disabled="true"] .nax__track,
+.nax .nax__profile[aria-disabled="true"],
+.nax .nax__profile[aria-disabled="true"]:hover {
+  border-style: dashed;
+  background: var(--nax-bg);
+}
+
+.nax .nax__reason {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8125em;
+  font-weight: 600;
+  color: var(--nax-text);
+}
+
+.nax .nax__group--profiles .nax__reason {
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+}
+
+/* Page structure: a button that shows the list below it. */
+.nax .nax__disclosure {
+  cursor: pointer;
+}
+
+.nax .nax__disclosure:hover {
+  background: var(--nax-hover);
+}
+
+.nax .nax__chevron {
+  display: flex;
+  flex: none;
+  transition: transform 0.15s ease-out;
+}
+
+.nax .nax__disclosure[aria-expanded="true"] .nax__chevron {
+  transform: rotate(180deg);
+}
+
+.nax .nax__structure {
+  display: block;
+  margin: 0 0.25rem 0.5rem 2.75rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--nax-divider);
+}
+
+.nax .nax__structure-title {
+  display: block;
+  padding: 0.5rem 0.5rem 0.25rem;
+  font-size: 0.8125em;
+  font-weight: 700;
+  color: var(--nax-muted);
+}
+
+.nax .nax__structure ul,
+.nax .nax__structure li {
+  display: block;
+}
+
+.nax .nax__jump {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border-radius: var(--nax-control-radius);
+  color: var(--nax-text);
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nax .nax__jump:hover {
+  background: var(--nax-hover);
+}
+
+.nax .nax__jump[data-level="2"] { padding-left: 1.25rem; }
+.nax .nax__jump[data-level="3"] { padding-left: 2rem; }
+.nax .nax__jump[data-level="4"] { padding-left: 2.75rem; }
+.nax .nax__jump[data-level="5"] { padding-left: 3.5rem; }
+.nax .nax__jump[data-level="6"] { padding-left: 4.25rem; }
+
+.nax .nax__empty {
+  display: block;
+  padding: 0.25rem 0.5rem 0.5rem;
+  font-size: 0.875em;
+  color: var(--nax-muted);
+}
+
+/* Read aloud: read page, pause, stop. */
+.nax .nax__speak {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem 0.5rem 3rem;
+}
+
+.nax .nax__action[aria-disabled="true"] {
+  border-style: dashed;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nax .nax__action[aria-disabled="true"]:hover {
+  background: var(--nax-bg);
+}
+
+/* Reading guide and reading mask: drawn over the page, under the panel, and
+   never in the way of the mouse. The script sets --nax-aid-y (pointer or focus
+   position) and --nax-aid-band (height of the focused element) on the widget. */
+.nax .nax__guide,
+.nax .nax__mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.nax .nax__guide {
+  top: 0;
+  height: var(--nax-guide-size);
+  border-radius: 0;
+  background: var(--nax-guide-color);
+  box-shadow: 0 0 0 2px var(--nax-guide-halo);
+  transform: translateY(var(--nax-aid-y, 50vh));
+}
+
+.nax .nax__mask {
+  background: var(--nax-mask-color);
+}
+
+.nax .nax__mask--top {
+  top: 0;
+  height: max(0px, calc(var(--nax-aid-y, 50vh) - max(var(--nax-mask-band), var(--nax-aid-band, 0px)) / 2));
+}
+
+.nax .nax__mask--bottom {
+  top: calc(var(--nax-aid-y, 50vh) + max(var(--nax-mask-band), var(--nax-aid-band, 0px)) / 2);
+  bottom: 0;
+}
+
+/* Read aloud: after a click on a control (link, button, label …) it is read,
+   and this hint next to it says that the next click uses it. Placed by the
+   script; empty and out of sight otherwise. */
+.nax .nax__hint {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: min(22rem, calc(100vw - 16px));
+  padding: 0.375rem 0.625rem;
+  border-radius: var(--nax-control-radius);
+  background: var(--nax-toggle-bg);
+  color: var(--nax-toggle-color);
+  box-shadow: 0 0 0 2px var(--nax-toggle-ring), var(--nax-shadow);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.nax .nax__hint:not(.nax__hint--shown) {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  box-shadow: none;
+}
+
+/* The button and the panel stay above the guide and the mask; the hint above all. */
+.nax .nax__toggle,
+.nax .nax__panel {
+  z-index: 1;
+}
+
+.nax .nax__hint {
+  z-index: 2;
+}
+
+/* Footer: reset, accessibility statement, cookie settings */
+.nax .nax__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--nax-divider);
+}
+
+.nax .nax__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.5rem 0.875rem;
+  border: 2px solid var(--nax-border);
+  border-radius: var(--nax-control-radius);
+  background: var(--nax-bg);
+  color: var(--nax-text);
+  font: inherit;
+  font-size: 0.9375em;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nax .nax__action .nax__svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.nax .nax__action--link {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.nax .nax__action:hover {
+  background: var(--nax-hover);
+}
+
+/* Visible focus for every control of the widget. */
+.nax .nax__toggle:focus-visible {
+  outline: 3px solid var(--nax-focus-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--nax-toggle-ring), 0 0 0 8px var(--nax-focus-halo);
+}
+
+.nax .nax__close:focus-visible,
+.nax .nax__row:focus-visible,
+.nax .nax__step:focus-visible,
+.nax .nax__action:focus-visible,
+.nax .nax__profile:focus-visible,
+.nax .nax__jump:focus-visible {
+  outline: 3px solid var(--nax-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nax[data-nax] .nax__panel,
+  .nax[data-nax] .nax__backdrop {
+    animation: none;
+  }
+
+  .nax .nax__knob,
+  .nax .nax__chevron {
+    transition: none;
+  }
+}
+
+/* Windows contrast themes: system colours instead of the design colours. */
+@media (forced-colors: active) {
+  .nax .nax__toggle,
+  .nax .nax__panel {
+    border: 2px solid CanvasText;
+  }
+
+  .nax .nax__hint {
+    border: 2px solid CanvasText;
+  }
+
+  .nax .nax__track,
+  .nax .nax__knob {
+    forced-color-adjust: none;
+  }
+
+  .nax .nax__track {
+    border-color: CanvasText;
+    background: Canvas;
+  }
+
+  .nax .nax__knob {
+    background: CanvasText;
+    color: Canvas;
+  }
+
+  .nax .nax__switch[aria-checked="true"] .nax__track {
+    border-color: Highlight;
+    background: Highlight;
+  }
+
+  .nax .nax__switch[aria-checked="true"] .nax__knob {
+    background: HighlightText;
+    color: Highlight;
+  }
+
+  .nax .nax__step[aria-disabled="true"],
+  .nax .nax__action[aria-disabled="true"] {
+    border-color: GrayText;
+    color: GrayText;
+    opacity: 1;
+  }
+
+  .nax .nax__profile[aria-pressed="true"] {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .nax .nax__guide,
+  .nax .nax__mask {
+    forced-color-adjust: none;
+  }
+}
+
+@media print {
+  .nax {
+    display: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * 3. Effects on the page
+ *    Set by the panel as attributes on <html>. The panel itself (.nax) is left
+ *    out of the effects that change colours or spacing, so it stays usable.
+ * ------------------------------------------------------------------------- */
+
+/* Text size: the head script sets font-size on <html> to
+   calc(var(--nax-font-base) * factor). A website whose root font size is not
+   the browser default (e.g. 62.5 %) sets --nax-font-base to that value. This
+   needs font sizes in rem, em or % in the design. With the module option
+   "Enlarge the whole page" (for designs with sizes in px) the content of the
+   page is zoomed instead (data-a11y-font-zoom, --nax-font-zoom), like the zoom
+   of the browser; the widget of the panel (data-nax-host) is left out. The
+   buttons at the edge of the screen of NEO Basic measure the buttons as
+   zoomed, so their arrangement follows. */
+
+:where(html[data-a11y-font-zoom]) body > :not([data-nax-host]) {
+  zoom: var(--nax-font-zoom, 1);
+}
+
+/* -- High contrast: black text on white, links underlined, borders strengthened,
+      no background images. Generic on purpose; see README for overriding. -- */
+
+:where(html[data-a11y-contrast]),
+:where(html[data-a11y-contrast] body) {
+  background-color: var(--nax-contrast-bg) !important;
+  background-image: none !important;
+  color: var(--nax-contrast-text) !important;
+}
+
+:where(html[data-a11y-contrast] body *:not(.nax, .nax *, img, picture, video, canvas, iframe, object, embed, svg, svg *, input, select, textarea, option, optgroup, progress, meter)) {
+  border-color: var(--nax-contrast-border) !important;
+  background-color: var(--nax-contrast-bg) !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  color: var(--nax-contrast-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+}
+
+/* Icons drawn as CSS masks (marked by accessibility.js) take their colour from
+   the background: they keep the text colour instead of turning white on white. */
+:where(html[data-a11y-contrast] [data-nax-mask]:not(.nax, .nax *)) {
+  background-color: currentColor !important;
+}
+
+/* Form fields keep their own background images (e.g. the arrow of a select)
+   and checkboxes and radio buttons stay untouched, so their state stays visible. */
+:where(html[data-a11y-contrast] :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="image"], [type="hidden"]), select, textarea):not(.nax *)) {
+  border-color: var(--nax-contrast-border) !important;
+  background-color: var(--nax-contrast-bg) !important;
+  color: var(--nax-contrast-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+:where(html[data-a11y-contrast]) ::placeholder {
+  color: var(--nax-contrast-muted) !important;
+  -webkit-text-fill-color: currentColor !important;
+  opacity: 1 !important;
+}
+
+/* Buttons and fields get a visible edge even without a border of their own. */
+:where(html[data-a11y-contrast] :is(button, [role="button"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="hidden"]), select, textarea):not(.nax *)) {
+  box-shadow: inset 0 0 0 2px var(--nax-contrast-border) !important;
+}
+
+:where(html[data-a11y-contrast] :is(a[href], a[href] *):not(.nax *, svg, svg *)) {
+  color: var(--nax-contrast-link) !important;
+}
+
+:where(html[data-a11y-contrast] a[href]:not(.nax *)) {
+  text-decoration: underline !important;
+  text-underline-offset: 0.15em !important;
+}
+
+:where(html[data-a11y-contrast] :focus-visible:not(.nax *)) {
+  outline: 3px solid var(--nax-contrast-text) !important;
+  outline-offset: 2px !important;
+}
+
+/* -- Colour filters: reduce contrast, reduce colours, greyscale. A filter on
+      <html>, <body> or a wrapper would also filter the panel and, below the
+      root, make fixed elements (sticky headers, chat buttons) scroll with the
+      page. Instead a layer over the whole window filters what lies beneath it
+      (backdrop-filter); it ignores the mouse and lies under the panel. The
+      filters of the active modes are combined. -- */
+
+:where(html[data-a11y-lowcontrast]) {
+  --nax-f-lowcontrast: var(--nax-lowcontrast-filter);
+}
+
+:where(html[data-a11y-lowsaturation]) {
+  --nax-f-lowsaturation: var(--nax-lowsaturation-filter);
+}
+
+:where(html[data-a11y-grayscale]) {
+  --nax-f-grayscale: grayscale(1);
+}
+
+:where(html:is([data-a11y-lowcontrast], [data-a11y-lowsaturation], [data-a11y-grayscale]))::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: calc(var(--nax-z-index) - 1);
+  pointer-events: none;
+  -webkit-backdrop-filter: var(--nax-f-lowcontrast,) var(--nax-f-lowsaturation,) var(--nax-f-grayscale,);
+  backdrop-filter: var(--nax-f-lowcontrast,) var(--nax-f-lowsaturation,) var(--nax-f-grayscale,);
+}
+
+@media print {
+  :where(html)::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* -- Readable font and dyslexia font: on all text of the page. Elements that
+      usually carry an icon font (classes with "icon" or "symbol", Font
+      Awesome, Bootstrap Icons, <i>, aria-hidden) and code keep their font;
+      a website marks further ones with data-nax-keep-font. The panel follows
+      the page font. -- */
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("fonts/OpenDyslexic-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("fonts/OpenDyslexic-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:where(html[data-a11y-typeface] body),
+:where(html[data-a11y-typeface] body :not(.nax *, i, svg, svg *, code, kbd, pre, samp, var, math, [class*="icon" i], [class*="symbol" i], [class^="fa"], [class*=" fa"], [class^="bi-"], [class*=" bi-"], [class~="bi"], [aria-hidden="true"], [aria-hidden="true"] *, [data-nax-keep-font], [data-nax-keep-font] *)) {
+  font-family: var(--nax-readable-font) !important;
+}
+
+:where(html[data-a11y-dyslexia] body),
+:where(html[data-a11y-dyslexia] body :not(.nax *, i, svg, svg *, code, kbd, pre, samp, var, math, [class*="icon" i], [class*="symbol" i], [class^="fa"], [class*=" fa"], [class^="bi-"], [class*=" bi-"], [class~="bi"], [aria-hidden="true"], [aria-hidden="true"] *, [data-nax-keep-font], [data-nax-keep-font] *)) {
+  font-family: var(--nax-dyslexia-font) !important;
+}
+
+/* -- More spacing (key "readable"): the spacing of WCAG 1.4.12 (line height 1.5, letter
+      spacing 0.12em, word spacing 0.16em, paragraph spacing 2em). Spans are
+      left alone so icon fonts that rely on ligatures keep working. -- */
+
+:where(html[data-a11y-readable] body),
+:where(html[data-a11y-readable] :is(p, li, dt, dd, blockquote, figcaption, caption, td, th, label, legend, address, summary, h1, h2, h3, h4, h5, h6):not(.nax *)) {
+  line-height: 1.5 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+
+:where(html[data-a11y-readable] p:not(.nax *)) {
+  margin-bottom: 2em !important;
+}
+
+/* -- Align text left: no centred or justified text, no automatic
+      hyphenation (hyphens the author set by hand stay). Buttons and form
+      fields keep their alignment. -- */
+
+:where(html[data-a11y-align] body :not(.nax, .nax *, button, input, select, textarea, [role="button"])) {
+  text-align: start !important;
+  text-align-last: auto !important;
+  -webkit-hyphens: manual !important;
+  hyphens: manual !important;
+}
+
+/* -- Highlight headings: a frame around every heading. -- */
+
+:where(html[data-a11y-headings] :is(h1, h2, h3, h4, h5, h6, [role="heading"]):not(.nax *)) {
+  outline: 2px solid var(--nax-mark-color) !important;
+  outline-offset: 0.2em !important;
+}
+
+/* -- Hide images: pictures disappear; the script shows their description
+      (alt text) in their place (.nax-alt). Decorative images (empty alt)
+      leave nothing. Background images set in CSS stay: text often sits on
+      them and could become unreadable without them. -- */
+
+:where(html[data-a11y-noimages] :is(img, input[type="image"]):not(.nax *)) {
+  display: none !important;
+}
+
+.nax-alt {
+  display: none !important;
+}
+
+:where(html[data-a11y-noimages]) .nax-alt {
+  display: inline-block !important;
+  max-width: 100%;
+  margin: 0.125em 0;
+  padding: 0.25em 0.5em;
+  border: 1px dashed currentColor;
+  border-radius: 2px;
+  font-size: 0.875em;
+  font-style: italic;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* -- Read aloud: text blocks the visitor can have read are marked by the
+      script (data-nax-speakable); the block being read is highlighted. -- */
+
+:where(html[data-a11y-speak] [data-nax-speakable]) {
+  cursor: pointer;
+}
+
+:where(html[data-a11y-speak] [data-nax-speakable]:hover) {
+  outline: 2px dashed var(--nax-mark-color) !important;
+  outline-offset: 2px !important;
+}
+
+:where(html[data-a11y-speak] [data-nax-speakable]:focus-visible) {
+  outline: 3px solid var(--nax-focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 7px var(--nax-focus-halo) !important;
+}
+
+.nax-reading,
+html[data-a11y-contrast] .nax-reading {
+  background-color: var(--nax-reading-bg) !important;
+  color: var(--nax-reading-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+  outline: 3px solid var(--nax-reading-outline) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px;
+}
+
+.nax-reading *,
+html[data-a11y-contrast] .nax-reading * {
+  background-color: transparent !important;
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* -- Highlight links: links underlined, buttons outlined. A focused element
+      keeps the website's own focus style. -- */
+
+:where(html[data-a11y-links] a[href]:not(.nax *)) {
+  text-decoration: underline !important;
+  text-underline-offset: 0.15em !important;
+}
+
+:where(html[data-a11y-links] :is(button, [role="button"], input[type="button"], input[type="submit"], input[type="reset"]):not(.nax *):not(:focus-visible)) {
+  outline: 2px solid var(--nax-mark-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* -- Large cursor: arrow everywhere, hand on links and buttons. -- */
+
+:where(html[data-a11y-cursor]),
+:where(html[data-a11y-cursor] *) {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M9 4v37l10-10 6 14 6-3-6-13h14z' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 9 4, auto !important;
+}
+
+:where(html[data-a11y-cursor] :is(a[href], a[href] *, button, button *, [role="button"], [role="button"] *, [role="switch"], [role="switch"] *, label, select, summary, input[type="checkbox"], input[type="radio"], input[type="button"], input[type="submit"], input[type="reset"])),
+:where(html[data-a11y-cursor][data-a11y-speak] :is([data-nax-speakable], [data-nax-speakable] *)) {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M18 22V8a3 3 0 0 1 6 0v12h1v-3a3 3 0 0 1 6 0v3h1v-1a3 3 0 0 1 6 0v2h.5a2.5 2.5 0 0 1 2.5 2.5V33c0 6-4 11-10 11h-6c-4 0-6.5-2-8.5-5L10 30a3 3 0 0 1 4.5-4l3.5 3z' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 21 5, pointer !important;
+}
+
+/* -- Strong focus: thick dark frame with a light halo, visible on light and on
+      dark backgrounds. -- */
+
+:where(html[data-a11y-focus] :focus-visible) {
+  outline: 3px solid var(--nax-focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 7px var(--nax-focus-halo) !important;
+}
+
+/* -- Stop animations (key "motion"): animations and transitions end at once,
+      including their delays (otherwise content waits on opacity: 0), no
+      smooth scrolling. The script also pauses videos that play by themselves
+      and animations started by scripts. -- */
+
+:where(html[data-a11y-motion]) {
+  scroll-behavior: auto !important;
+}
+
+:where(html[data-a11y-motion]) *,
+:where(html[data-a11y-motion]) *::before,
+:where(html[data-a11y-motion]) *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}

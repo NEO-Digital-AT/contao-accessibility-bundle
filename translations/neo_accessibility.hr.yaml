@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Postavke pristupačnosti"
+    label_active: "Postavke pristupačnosti, uključeno: {count}"
+link:
+    label: "Postavke pristupačnosti"
+panel:
+    title: "Pristupačnost"
+    description: "Prilagodite prikaz ove web-stranice."
+    close: "Zatvori"
+profiles:
+    title: "Brzi odabir"
+    description: "Svaki uključuje nekoliko postavki odjednom. Ponovnim odabirom ih isključujete."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Slabovidnost"
+        description: "Veći tekst, visoki kontrast, veliki pokazivač miša i jasan okvir za tipkovnicu."
+    dyslexia:
+        label: "Disleksija"
+        description: "Font za disleksiju, više razmaka i tekst poravnat ulijevo."
+    concentration:
+        label: "Koncentracija"
+        description: "Zaustavlja animacije i zatamnjuje sve osim redaka koje čitate."
+    epilepsy:
+        label: "Epilepsija"
+        description: "Zaustavlja animacije i pokretne slike te čini boje blijeđima."
+    motor:
+        label: "Motorika"
+        description: "Veliki pokazivač miša i jasan okvir za korištenje tipkovnice."
+    reader:
+        label: "Čitanje naglas"
+        description: "Kliknite tekst da biste ga čuli."
+group:
+    text: "Tekst i sadržaj"
+    colour: "Boje"
+    orientation: "Orijentacija"
+font:
+    label: "Veličina teksta"
+    description: "Povećanje teksta do 150\u00A0%."
+    decrease: "Manji tekst"
+    increase: "Veći tekst"
+    value: "{value}\u00A0%"
+    status: "Veličina teksta: {value}"
+typeface:
+    label: "Čitljiv font"
+    description: "Jednostavan, jasan font vašeg uređaja."
+dyslexia:
+    label: "Font za disleksiju"
+    description: "Font u kojem se slova lakše razlikuju."
+readable:
+    label: "Više razmaka"
+    description: "Više razmaka između redaka, slova i riječi."
+align:
+    label: "Tekst ulijevo"
+    description: "Bez centriranog ili obostrano poravnatog teksta, bez rastavljanja riječi."
+headings:
+    label: "Istakni naslove"
+    description: "Okvir oko svakog naslova."
+links:
+    label: "Istakni poveznice"
+    description: "Podcrtane poveznice i uokvireni gumbi."
+noimages:
+    label: "Sakrij slike"
+    description: "Slike nestaju, a umjesto njih prikazuje se njihov opis."
+    alt: "Slika: {alt}"
+cursor:
+    label: "Veliki pokazivač"
+    description: "Veći, bolje vidljiv pokazivač miša."
+contrast:
+    label: "Visoki kontrast"
+    description: "Crni tekst na bijeloj pozadini, podcrtane poveznice."
+lowcontrast:
+    label: "Smanji kontrast"
+    description: "Blaže, malo tamnije boje koje manje blješte."
+lowsaturation:
+    label: "Prigušene boje"
+    description: "Boje se prikazuju blijeđe."
+grayscale:
+    label: "Nijanse sive"
+    description: "Prikaz stranice bez boja."
+motion:
+    label: "Zaustavi animacije"
+    description: "Zaustavljanje animacija, pokretnih efekata i videozapisa koji se sami pokreću."
+focus:
+    label: "Jači fokus"
+    description: "Jasan okvir pokazuje gdje se nalazite kada koristite tipkovnicu."
+guide:
+    label: "Linija za čitanje"
+    description: "Linija prati pokazivač miša ili tipkovnicu i pomaže vam da ostanete u retku."
+mask:
+    label: "Maska za čitanje"
+    description: "Zatamnjuje stranicu osim trake oko pokazivača miša ili tipkovnice."
+structure:
+    label: "Struktura stranice"
+    description: "Područja i naslovi ove stranice. Odaberite jedan da biste otišli onamo."
+    areas: "Područja"
+    headings: "Naslovi"
+    empty: "Nema ih na ovoj stranici."
+    level: "Razina {level}"
+landmark:
+    banner: "Zaglavlje"
+    navigation: "Navigacija"
+    main: "Glavni sadržaj"
+    complementary: "Dodatne informacije"
+    contentinfo: "Podnožje"
+    search: "Pretraživanje"
+    form: "Obrazac"
+    region: "Odjeljak"
+speak:
+    label: "Čitanje naglas"
+    description: "Kliknite tekst da biste ga čuli; poveznica ili gumb čita se pri prvom kliku, a koristi pri drugom. Tipkom Tab čita se sve do čega dođete."
+    note: "Koristi glas instaliran na vašem uređaju. Tekst ostaje na vašem uređaju."
+    note_online: "Koristi glasove vašeg preglednika. Ako uređaj nema glas za jezik, neki preglednici za čitanje šalju tekst mrežnoj usluzi svojeg proizvođača."
+    no_voice: "Na ovom uređaju nije instaliran glas za jezik: {language}."
+    no_voice_browser: "Ovaj preglednik nema glas za jezik: {language}."
+    no_speech: "Ovaj preglednik ne može čitati naglas."
+    page: "Pročitaj stranicu"
+    pause: "Pauza"
+    resume: "Nastavi"
+    stop: "Zaustavi"
+    reading: "Čitanje u tijeku."
+    paused: "Pauzirano."
+    stopped: "Čitanje je zaustavljeno."
+    empty: "Na ovoj stranici nema teksta za čitanje."
+    again: "Za korištenje kliknite ili dodirnite još jednom."
+status:
+    on: "{label}: uključeno."
+    off: "{label}: isključeno."
+    replaced: "Isključeno: {label}."
+footer:
+    reset: "Poništi sve"
+    reset_done: "Sve su postavke poništene."
+    statement: "Izjava o pristupačnosti"
+    cookies: "Postavke kolačića"

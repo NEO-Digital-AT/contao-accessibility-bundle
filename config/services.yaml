@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Neo\AccessibilityBundle\:
+        resource: ../src/
+        exclude:
+            - ../src/DependencyInjection/
+            - ../src/ContaoManager/
+            - ../src/NeoAccessibilityBundle.php
+            # Constants and static helpers, not services.
+            - ../src/Panel/
+
+    # DCA callbacks of tl_module (info box, default of the offered settings).
+    # Public so Contao can resolve them by class name from the container.
+    Neo\AccessibilityBundle\Backend\ModuleCallbacks:
+        public: true

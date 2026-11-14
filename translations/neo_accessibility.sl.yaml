@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Nastavitve dostopnosti"
+    label_active: "Nastavitve dostopnosti, vklopljeno: {count}"
+link:
+    label: "Nastavitve dostopnosti"
+panel:
+    title: "Dostopnost"
+    description: "Prilagodite prikaz tega spletnega mesta."
+    close: "Zapri"
+profiles:
+    title: "Hitra izbira"
+    description: "Vsaka vklopi več nastavitev hkrati. Če jo izberete znova, jih izklopi."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Slabovidnost"
+        description: "Večje besedilo, visok kontrast, velik kazalec miške in jasen okvir za tipkovnico."
+    dyslexia:
+        label: "Disleksija"
+        description: "Pisava za disleksijo, več razmika in levo poravnano besedilo."
+    concentration:
+        label: "Zbranost"
+        description: "Ustavi animacije in zatemni vse razen vrstic, ki jih berete."
+    epilepsy:
+        label: "Epilepsija"
+        description: "Ustavi animacije in premikajoče se slike ter naredi barve bledejše."
+    motor:
+        label: "Motorika"
+        description: "Velik kazalec miške in jasen okvir za uporabo tipkovnice."
+    reader:
+        label: "Branje na glas"
+        description: "Kliknite besedilo, da ga slišite."
+group:
+    text: "Besedilo in vsebina"
+    colour: "Barve"
+    orientation: "Orientacija"
+font:
+    label: "Velikost besedila"
+    description: "Povečanje besedila do 150\u00A0%."
+    decrease: "Manjše besedilo"
+    increase: "Večje besedilo"
+    value: "{value}\u00A0%"
+    status: "Velikost besedila: {value}"
+typeface:
+    label: "Berljiva pisava"
+    description: "Preprosta, jasna pisava vaše naprave."
+dyslexia:
+    label: "Pisava za disleksijo"
+    description: "Pisava, v kateri je črke laže ločiti."
+readable:
+    label: "Več razmika"
+    description: "Več prostora med vrsticami, črkami in besedami."
+align:
+    label: "Besedilo levo"
+    description: "Brez sredinske ali obojestranske poravnave, brez deljenja besed."
+headings:
+    label: "Poudari naslove"
+    description: "Okvir okoli vsakega naslova."
+links:
+    label: "Poudari povezave"
+    description: "Podčrtane povezave in obrobljeni gumbi."
+noimages:
+    label: "Skrij slike"
+    description: "Slike izginejo, namesto njih se pokaže njihov opis."
+    alt: "Slika: {alt}"
+cursor:
+    label: "Velik kazalec"
+    description: "Večji, bolje viden kazalec miške."
+contrast:
+    label: "Visok kontrast"
+    description: "Črno besedilo na beli podlagi, podčrtane povezave."
+lowcontrast:
+    label: "Manjši kontrast"
+    description: "Mehkejše, nekoliko temnejše barve, ki manj bleščijo."
+lowsaturation:
+    label: "Bledejše barve"
+    description: "Barve so prikazane bledeje."
+grayscale:
+    label: "Sivine"
+    description: "Prikaz strani brez barv."
+motion:
+    label: "Ustavi animacije"
+    description: "Ustavitev animacij, gibljivih učinkov in videoposnetkov, ki se predvajajo sami."
+focus:
+    label: "Izrazit fokus"
+    description: "Jasen okvir pokaže, kje ste, ko uporabljate tipkovnico."
+guide:
+    label: "Bralna črta"
+    description: "Črta sledi kazalcu miške ali tipkovnici in vam pomaga ostati v vrstici."
+mask:
+    label: "Bralna maska"
+    description: "Zatemni stran razen pasu okoli kazalca miške ali tipkovnice."
+structure:
+    label: "Struktura strani"
+    description: "Območja in naslovi te strani. Izberite enega, da skočite tja."
+    areas: "Območja"
+    headings: "Naslovi"
+    empty: "Na tej strani jih ni."
+    level: "Raven {level}"
+landmark:
+    banner: "Glava"
+    navigation: "Navigacija"
+    main: "Glavna vsebina"
+    complementary: "Dodatne informacije"
+    contentinfo: "Noga"
+    search: "Iskanje"
+    form: "Obrazec"
+    region: "Razdelek"
+speak:
+    label: "Branje na glas"
+    description: "Kliknite besedilo, da ga slišite; povezava ali gumb se ob prvem kliku prebere, ob drugem uporabi. S tipko Tab se prebere vse, do česar pridete."
+    note: "Uporablja glas, nameščen v vaši napravi. Besedilo ostane v vaši napravi."
+    note_online: "Uporablja glasove vašega brskalnika. Če naprava nima glasu za jezik, nekateri brskalniki za branje pošljejo besedilo spletni storitvi svojega proizvajalca."
+    no_voice: "V tej napravi ni nameščenega glasu za jezik: {language}."
+    no_voice_browser: "Ta brskalnik nima glasu za jezik: {language}."
+    no_speech: "Ta brskalnik ne zna brati na glas."
+    page: "Preberi stran"
+    pause: "Premor"
+    resume: "Nadaljuj"
+    stop: "Ustavi"
+    reading: "Branje poteka."
+    paused: "Začasno ustavljeno."
+    stopped: "Branje je ustavljeno."
+    empty: "Na tej strani ni besedila za branje."
+    again: "Za uporabo kliknite ali tapnite še enkrat."
+status:
+    on: "{label}: vklopljeno."
+    off: "{label}: izklopljeno."
+    replaced: "Izklopljeno: {label}."
+footer:
+    reset: "Ponastavi vse"
+    reset_done: "Vse nastavitve so ponastavljene."
+    statement: "Izjava o dostopnosti"
+    cookies: "Nastavitve piškotkov"

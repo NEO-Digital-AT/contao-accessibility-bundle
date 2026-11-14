@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Toegankelijkheidsinstellingen"
+    label_active: "Toegankelijkheidsinstellingen, ingeschakeld: {count}"
+link:
+    label: "Toegankelijkheidsinstellingen"
+panel:
+    title: "Toegankelijkheid"
+    description: "Pas de weergave van deze website aan."
+    close: "Sluiten"
+profiles:
+    title: "Snelkeuze"
+    description: "Elke keuze zet meerdere instellingen tegelijk aan. Kies hem nog eens om ze weer uit te zetten."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Slechtziend"
+        description: "Grotere tekst, hoog contrast, een grote muisaanwijzer en een duidelijk kader voor het toetsenbord."
+    dyslexia:
+        label: "Dyslexie"
+        description: "Een lettertype voor dyslexie, meer ruimte en links uitgelijnde tekst."
+    concentration:
+        label: "Concentratie"
+        description: "Stopt animaties en maakt alles donker behalve de regels die u leest."
+    epilepsy:
+        label: "Epilepsie"
+        description: "Stopt animaties en bewegende beelden en maakt de kleuren bleker."
+    motor:
+        label: "Motoriek"
+        description: "Een grote muisaanwijzer en een duidelijk kader voor bediening met het toetsenbord."
+    reader:
+        label: "Voorlezen"
+        description: "Klik op een tekst om hem te horen."
+group:
+    text: "Tekst en inhoud"
+    colour: "Kleuren"
+    orientation: "Oriëntatie"
+font:
+    label: "Tekstgrootte"
+    description: "De tekst vergroten, tot 150%."
+    decrease: "Kleinere tekst"
+    increase: "Grotere tekst"
+    value: "{value}%"
+    status: "Tekstgrootte: {value}"
+typeface:
+    label: "Leesbaar lettertype"
+    description: "Een eenvoudig, duidelijk lettertype van uw apparaat."
+dyslexia:
+    label: "Dyslexielettertype"
+    description: "Een lettertype waarin de letters makkelijker uit elkaar te houden zijn."
+readable:
+    label: "Meer ruimte"
+    description: "Meer ruimte tussen regels, letters en woorden."
+align:
+    label: "Tekst links uitlijnen"
+    description: "Geen gecentreerde of uitgevulde tekst, geen afgebroken woorden."
+headings:
+    label: "Koppen markeren"
+    description: "Een kader rond elke kop."
+links:
+    label: "Links markeren"
+    description: "Links onderstrepen en knoppen omranden."
+noimages:
+    label: "Afbeeldingen verbergen"
+    description: "Afbeeldingen verdwijnen; hun beschrijving staat ervoor in de plaats."
+    alt: "Afbeelding: {alt}"
+cursor:
+    label: "Grote cursor"
+    description: "Een grotere muisaanwijzer die beter te zien is."
+contrast:
+    label: "Hoog contrast"
+    description: "Zwarte tekst op een witte achtergrond, links onderstreept."
+lowcontrast:
+    label: "Contrast verlagen"
+    description: "Zachtere, iets donkerdere kleuren die minder verblinden."
+lowsaturation:
+    label: "Kleuren dempen"
+    description: "De kleuren bleker tonen."
+grayscale:
+    label: "Grijstinten"
+    description: "De pagina zonder kleuren tonen."
+motion:
+    label: "Animaties stoppen"
+    description: "Animaties, bewegende effecten en video’s die vanzelf spelen stoppen."
+focus:
+    label: "Sterke focus"
+    description: "Een duidelijk kader laat zien waar u bent als u het toetsenbord gebruikt."
+guide:
+    label: "Leeslijn"
+    description: "Een lijn volgt de muisaanwijzer of het toetsenbord en helpt u op de regel te blijven."
+mask:
+    label: "Leesmasker"
+    description: "Maakt de pagina donker, behalve een strook rond de muisaanwijzer of het toetsenbord."
+structure:
+    label: "Paginastructuur"
+    description: "Gebieden en koppen van deze pagina. Kies er een om erheen te gaan."
+    areas: "Gebieden"
+    headings: "Koppen"
+    empty: "Geen op deze pagina."
+    level: "Niveau {level}"
+landmark:
+    banner: "Kop van de pagina"
+    navigation: "Navigatie"
+    main: "Hoofdinhoud"
+    complementary: "Aanvullende informatie"
+    contentinfo: "Voettekst"
+    search: "Zoeken"
+    form: "Formulier"
+    region: "Sectie"
+speak:
+    label: "Voorlezen"
+    description: "Klik op een tekst om hem te horen; een link of knop wordt bij de eerste klik voorgelezen en bij de tweede gebruikt. Met de Tab-toets wordt alles voorgelezen wat u bereikt."
+    note: "Gebruikt een stem die op uw apparaat is geïnstalleerd. De tekst blijft op uw apparaat."
+    note_online: "Gebruikt de stemmen van uw browser. Heeft uw apparaat er geen voor de taal, dan sturen sommige browsers de tekst naar een onlinedienst van hun maker om hem voor te lezen."
+    no_voice: "Op dit apparaat is geen stem geïnstalleerd voor deze taal: {language}."
+    no_voice_browser: "Deze browser heeft geen stem voor deze taal: {language}."
+    no_speech: "Deze browser kan niet voorlezen."
+    page: "Pagina voorlezen"
+    pause: "Pauze"
+    resume: "Verder"
+    stop: "Stoppen"
+    reading: "Wordt voorgelezen."
+    paused: "Gepauzeerd."
+    stopped: "Voorlezen gestopt."
+    empty: "Op deze pagina staat geen tekst om voor te lezen."
+    again: "Klik of tik nog een keer om het te gebruiken."
+status:
+    on: "{label}: aan."
+    off: "{label}: uit."
+    replaced: "{label} is uitgezet."
+footer:
+    reset: "Alles herstellen"
+    reset_done: "Alle instellingen zijn hersteld."
+    statement: "Toegankelijkheidsverklaring"
+    cookies: "Cookie-instellingen"

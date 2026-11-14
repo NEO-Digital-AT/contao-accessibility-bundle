@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Einstellungen zur Barrierefreiheit"
+    label_active: "Einstellungen zur Barrierefreiheit, {count} eingeschaltet"
+link:
+    label: "Einstellungen zur Barrierefreiheit"
+panel:
+    title: "Barrierefreiheit"
+    description: "Passen Sie die Darstellung dieser Website an."
+    close: "Schließen"
+profiles:
+    title: "Schnellauswahl"
+    description: "Jede schaltet mehrere Einstellungen auf einmal ein. Nochmals wählen schaltet sie wieder aus."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Sehschwäche"
+        description: "Größere Schrift, hoher Kontrast, ein großer Mauszeiger und ein deutlicher Rahmen für die Tastatur."
+    dyslexia:
+        label: "Legasthenie"
+        description: "Eine Schrift für Legasthenie, mehr Abstand und linksbündiger Text."
+    concentration:
+        label: "Konzentration"
+        description: "Hält Animationen an und dunkelt alles ab außer den Zeilen, die Sie lesen."
+    epilepsy:
+        label: "Epilepsie"
+        description: "Hält Animationen und bewegte Bilder an und macht die Farben blasser."
+    motor:
+        label: "Motorik"
+        description: "Ein großer Mauszeiger und ein deutlicher Rahmen für die Bedienung mit der Tastatur."
+    reader:
+        label: "Vorlesen"
+        description: "Klicken Sie auf einen Text, um ihn zu hören."
+group:
+    text: "Text und Inhalt"
+    colour: "Farben"
+    orientation: "Orientierung"
+font:
+    label: "Schriftgröße"
+    description: "Text vergrößern, bis 150\u00A0%."
+    decrease: "Schrift verkleinern"
+    increase: "Schrift vergrößern"
+    value: "{value}\u00A0%"
+    status: "Schriftgröße: {value}"
+typeface:
+    label: "Lesbare Schrift"
+    description: "Eine schlichte, klare Schrift Ihres Geräts."
+dyslexia:
+    label: "Legasthenie-Schrift"
+    description: "Eine Schrift, deren Buchstaben leichter zu unterscheiden sind."
+readable:
+    label: "Mehr Abstand"
+    description: "Mehr Abstand zwischen Zeilen, Buchstaben und Wörtern."
+align:
+    label: "Text linksbündig"
+    description: "Kein zentrierter Text und kein Blocksatz, keine getrennten Wörter."
+headings:
+    label: "Überschriften hervorheben"
+    description: "Ein Rahmen um jede Überschrift."
+links:
+    label: "Links hervorheben"
+    description: "Links unterstreichen und Schaltflächen umranden."
+noimages:
+    label: "Bilder ausblenden"
+    description: "Bilder verschwinden, an ihrer Stelle steht ihre Beschreibung."
+    alt: "Bild: {alt}"
+cursor:
+    label: "Großer Mauszeiger"
+    description: "Ein größerer Mauszeiger, der leichter zu sehen ist."
+contrast:
+    label: "Hoher Kontrast"
+    description: "Schwarze Schrift auf weißem Grund, Links unterstrichen."
+lowcontrast:
+    label: "Kontrast verringern"
+    description: "Sanftere, etwas dunklere Farben, die weniger blenden."
+lowsaturation:
+    label: "Farben abschwächen"
+    description: "Die Farben blasser zeigen."
+grayscale:
+    label: "Graustufen"
+    description: "Die Seite ohne Farben anzeigen."
+motion:
+    label: "Animationen anhalten"
+    description: "Animationen, bewegte Effekte und Videos, die von selbst laufen, anhalten."
+focus:
+    label: "Fokus verstärken"
+    description: "Ein deutlicher Rahmen zeigt, wo Sie sich mit der Tastatur gerade befinden."
+guide:
+    label: "Leselinie"
+    description: "Eine Linie folgt dem Mauszeiger oder der Tastatur und hilft, in der Zeile zu bleiben."
+mask:
+    label: "Lesemaske"
+    description: "Dunkelt die Seite ab, nur ein Streifen um den Mauszeiger oder die Tastatur bleibt hell."
+structure:
+    label: "Seitenstruktur"
+    description: "Bereiche und Überschriften dieser Seite. Wählen Sie einen Eintrag, um dorthin zu springen."
+    areas: "Bereiche"
+    headings: "Überschriften"
+    empty: "Keine auf dieser Seite."
+    level: "Ebene {level}"
+landmark:
+    banner: "Kopfbereich"
+    navigation: "Navigation"
+    main: "Hauptinhalt"
+    complementary: "Zusatzinformationen"
+    contentinfo: "Fußbereich"
+    search: "Suche"
+    form: "Formular"
+    region: "Abschnitt"
+speak:
+    label: "Vorlesen"
+    description: "Klicken Sie auf einen Text, um ihn zu hören; ein Link oder eine Schaltfläche wird beim ersten Klick vorgelesen und beim zweiten benutzt. Mit der Tabulatortaste wird alles vorgelesen, was Sie erreichen."
+    note: "Nutzt eine Stimme, die auf Ihrem Gerät installiert ist. Der Text bleibt auf Ihrem Gerät."
+    note_online: "Nutzt die Stimmen Ihres Browsers. Hat Ihr Gerät keine für die Sprache, schicken manche Browser den Text zum Vorlesen an einen Online-Dienst ihres Herstellers."
+    no_voice: "Auf diesem Gerät ist keine Stimme für {language} installiert."
+    no_voice_browser: "Dieser Browser hat keine Stimme für {language}."
+    no_speech: "Dieser Browser kann nicht vorlesen."
+    page: "Seite vorlesen"
+    pause: "Pause"
+    resume: "Weiter"
+    stop: "Stopp"
+    reading: "Wird vorgelesen."
+    paused: "Angehalten."
+    stopped: "Vorlesen beendet."
+    empty: "Auf dieser Seite gibt es keinen Text zum Vorlesen."
+    again: "Zum Benutzen noch einmal klicken oder tippen."
+status:
+    on: "{label}: eingeschaltet."
+    off: "{label}: ausgeschaltet."
+    replaced: "{label} wurde ausgeschaltet."
+footer:
+    reset: "Alles zurücksetzen"
+    reset_done: "Alle Einstellungen wurden zurückgesetzt."
+    statement: "Erklärung zur Barrierefreiheit"
+    cookies: "Cookie-Einstellungen"

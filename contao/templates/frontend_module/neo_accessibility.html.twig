@@ -1,0 +1,260 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+
+{#
+    Accessibility panel (front-end module "neo_accessibility").
+
+    Markup only. The behaviour lives in public/accessibility.js, the look and
+    the display effects in public/accessibility.css. The script finds its parts
+    through the data-nax-* attributes; keep them when overriding this template.
+    Every part except the panel itself is optional: the script uses what it
+    finds. Texts come from translations/neo_accessibility.<lang>.yaml in the
+    language of the page.
+
+    The widget starts hidden and is shown by the script, so a visitor without
+    JavaScript never sees a button that does nothing. The script also moves it
+    to the end of <body>, out of the layout section it was placed in. Besides
+    the floating button, any element with data-nax-open opens the panel (the
+    insert tag {{accessibility::link}} writes such a link).
+
+    Read aloud uses only voices installed on the visitor's device unless the
+    module allows online voices (data-nax-voices="device" or "any"). Where
+    the browser cannot speak or has no suitable voice for the page language,
+    the script disables the switch and the quick option "Read aloud" and
+    writes the reason into the data-nax-speech-reason elements next to them.
+
+    The floating button takes part in the buttons at the edge of the screen of
+    NEO Basic (data-neo-dock-* on the widget, data-neo-dock-launcher on the
+    button): with buttons of other extensions in the same corner (cookie
+    settings, chat) it becomes an entry of one settings button with a menu, or
+    is stacked with them, as set in the page layout. The entry shows the icon
+    of the template data-neo-dock-icon and the number of settings that are on
+    (data-neo-dock-badge, written by the script). The entry data-nax-cookies
+    in the panel is shown only while the page has no button to reopen the
+    cookie settings (data-ncc-reopen).
+
+    No <header>/<footer> elements: the module usually sits in the layout's
+    footer section, and Contao's <footer id="footer"> must not contain them.
+
+    Variables: uid, position (bottom-left|bottom-right|top-left|top-right|none),
+    layout (popover|drawer-left|drawer-right|center), modal (bool: backdrop,
+    aria-modal), font_zoom (bool: text size
+    enlarges the whole page, data-nax-font-zoom), font (bool), switches (list of
+    names), groups (list of {key, features}), structure (bool), profiles (list
+    of {key, settings}), online_voices (bool), statement_url (string|null),
+    statement_current (bool), locale.
+#}
+
+{% block inner %}
+    {% set domain = 'neo_accessibility' %}
+    {% set svg_open = '<svg class="nax__svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">' %}
+    {% set icons = {
+        accessibility: '<circle cx="12" cy="4.5" r="1.75"/><path d="M4.5 8.5 12 10l7.5-1.5M12 10v4.5m0 0L9 21m3-6.5L15 21"/>',
+        close: '<path d="M6 6l12 12M18 6 6 18"/>',
+        font: '<path d="M3 7V5h11v2M8.5 5v14M6.5 19h4M14 12v-1.5h7V12M17.5 10.5V19M16 19h3"/>',
+        typeface: '<path d="M2.5 19 7.5 5l5 14M4.3 14h6.4"/><circle cx="17.5" cy="15.5" r="3"/><path d="M20.5 12v7"/>',
+        dyslexia: '<path d="M4 4v15"/><circle cx="7.5" cy="15.5" r="3.5"/><path d="M20 4v15"/><circle cx="16.5" cy="15.5" r="3.5"/>',
+        readable: '<path d="M11 6h9M11 12h9M11 18h9M5 4v16M3 6l2-2 2 2M3 18l2 2 2-2"/>',
+        align: '<path d="M4 5h16M4 9.5h10M4 14h16M4 18.5h10"/>',
+        headings: '<path d="M4 5v14M12 5v14M4 12h8M16 9.5l3-2V19"/>',
+        links: '<path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/>',
+        noimages: '<path d="M4 5h16v14H4z"/><path d="m4 16 4.5-4.5 4 4 2-2L20 19"/><path d="M3 3l18 18"/>',
+        cursor: '<path d="M5 3l14 8-6 1.5L10 19z"/>',
+        contrast: '<circle cx="12" cy="12" r="9"/><path class="nax__fill" d="M12 3a9 9 0 0 1 0 18z"/>',
+        lowcontrast: '<circle cx="12" cy="12" r="4"/><path d="M12 3.5v1.5M12 19v1.5M3.5 12H5M19 12h1.5M6 6l1 1M17 17l1 1M6 18l1-1M17 7l1-1"/>',
+        lowsaturation: '<path d="M12 3c3 3.6 6 7.3 6 10.5a6 6 0 0 1-12 0C6 10.3 9 6.6 12 3z"/><path d="M8.5 13.5h7M9.5 16.5h5"/>',
+        grayscale: '<path d="M12 3c3 3.6 6 7.3 6 10.5a6 6 0 0 1-12 0C6 10.3 9 6.6 12 3z"/><path class="nax__fill" d="M12 3c-3 3.6-6 7.3-6 10.5a6 6 0 0 0 6 6z"/>',
+        motion: '<circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>',
+        focus: '<path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4"/><circle cx="12" cy="12" r="3"/>',
+        guide: '<path d="M5 5h14M5 9h10"/><path class="nax__fill" d="M2 12.5h20v3H2z"/><path d="M5 19h12"/>',
+        mask: '<path d="M3 3h18v18H3z"/><path class="nax__fill" d="M3 3h18v6H3zM3 15h18v6H3z"/>',
+        structure: '<path d="M5 4v14h5M5 11h5M5 4h5"/><path d="M13 2.5h8v4h-8zM13 9h8v4h-8zM13 16h8v4h-8z"/>',
+        speak: '<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>',
+        vision: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+        concentration: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle class="nax__fill" cx="12" cy="12" r="1.5"/>',
+        epilepsy: '<path d="M13 3 5 14h6l-1 7 8-11h-6z"/><path d="M3 3l18 18"/>',
+        motor: '<path d="M9 11V5a2 2 0 0 1 4 0v5M13 10V8.5a2 2 0 0 1 4 0V11M17 11a2 2 0 0 1 4 0v3c0 4-3 7-7 7h-1c-2.5 0-4-1-5.3-3L4.5 15a1.8 1.8 0 0 1 2.8-2.2L9 14.5"/>',
+        chevron: '<path d="m7 10 5 5 5-5"/>',
+        play: '<path class="nax__fill" d="M8 5v14l11-7z"/>',
+        pause: '<path d="M9 5v14M15 5v14"/>',
+        stop: '<path class="nax__fill" d="M6 6h12v12H6z"/>',
+        reset: '<path d="M3.5 12a8.5 8.5 0 1 0 2.5-6L3.5 8.5"/><path d="M3.5 3.5v5h5"/>',
+        statement: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+        cookies: '<path d="M21 12.5A9 9 0 1 1 11.5 3a3 3 0 0 0 3.5 3.5 3 3 0 0 0 3.5 3.5 3 3 0 0 0 2.5 2.5z"/><path d="M8.5 9.5h.01M9 15h.01M14 15.5h.01M12.5 12h.01"/>',
+        check: '<path d="M5 12.5 10 17.5 19 7.5"/>',
+    } %}
+    {% set profile_icons = {vision: 'vision', dyslexia: 'dyslexia', concentration: 'concentration', epilepsy: 'epilepsy', motor: 'motor', reader: 'speak'} %}
+    {% set font_value = 'font.value'|trans({}, domain, locale) %}
+    {% set speech_reasons = {
+        'data-nax-msg-device': 'speak.no_voice'|trans({}, domain, locale),
+        'data-nax-msg-browser': 'speak.no_voice_browser'|trans({}, domain, locale),
+        'data-nax-msg-unsupported': 'speak.no_speech'|trans({}, domain, locale),
+    } %}
+    {% set structure_texts = {
+        areas: 'structure.areas'|trans({}, domain, locale),
+        headings: 'structure.headings'|trans({}, domain, locale),
+        empty: 'structure.empty'|trans({}, domain, locale),
+        level: 'structure.level'|trans({}, domain, locale),
+        banner: 'landmark.banner'|trans({}, domain, locale),
+        navigation: 'landmark.navigation'|trans({}, domain, locale),
+        main: 'landmark.main'|trans({}, domain, locale),
+        complementary: 'landmark.complementary'|trans({}, domain, locale),
+        contentinfo: 'landmark.contentinfo'|trans({}, domain, locale),
+        search: 'landmark.search'|trans({}, domain, locale),
+        form: 'landmark.form'|trans({}, domain, locale),
+        region: 'landmark.region'|trans({}, domain, locale),
+    } %}
+
+    <div class="nax nax--{{ position == 'none' ? 'no-button' : position }} nax--{{ layout }}{{ modal ? ' nax--modal' }}" id="{{ uid }}" data-nax data-nax-voices="{{ online_voices ? 'any' : 'device' }}"{{ font_zoom|default(false) ? ' data-nax-font-zoom' }}{% if position != 'none' %} data-neo-dock="accessibility" data-neo-dock-corner="{{ position }}" data-neo-dock-order="20" data-neo-dock-label="{{ 'panel.title'|trans({}, domain, locale) }}"{% endif %} hidden>
+        {% if position != 'none' %}
+            <button type="button" class="nax__toggle" data-nax-toggle data-neo-dock-launcher aria-expanded="false" aria-haspopup="dialog" aria-controls="{{ uid }}-panel" aria-label="{{ 'button.label'|trans({}, domain, locale) }}" data-nax-label-active="{{ 'button.label_active'|trans({}, domain, locale) }}">
+                <span class="nax__toggle-icon">{{ svg_open|raw }}{{ icons.accessibility|raw }}</svg></span>
+                <span class="nax__toggle-close">{{ svg_open|raw }}{{ icons.close|raw }}</svg></span>
+                {# Number of settings that are on; the button's label says it for screen readers. #}
+                <span class="nax__badge" data-nax-count aria-hidden="true"></span>
+            </button>
+
+            {# Icon of the entry in the menu of the settings button (NEO Basic); drawn outside the widget, hence its own colours. #}
+            <template data-neo-dock-icon><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{{ icons.accessibility|raw }}</svg></template>
+        {% endif %}
+
+        {% if modal %}
+            {# Dimmed background of the modal dialog; a click on it closes the panel. #}
+            <div class="nax__backdrop" data-nax-backdrop hidden></div>
+        {% endif %}
+
+        <div class="nax__panel" id="{{ uid }}-panel" role="dialog"{% if modal %} aria-modal="true"{% endif %} aria-labelledby="{{ uid }}-title" aria-describedby="{{ uid }}-desc" data-nax-panel hidden>
+            <div class="nax__head">
+                <div class="nax__heading">
+                    <h2 class="nax__title" id="{{ uid }}-title">{{ 'panel.title'|trans({}, domain, locale) }}</h2>
+                    <p class="nax__subtitle" id="{{ uid }}-desc">{{ 'panel.description'|trans({}, domain, locale) }}</p>
+                </div>
+                <button type="button" class="nax__close" data-nax-close aria-label="{{ 'panel.close'|trans({}, domain, locale) }}">{{ svg_open|raw }}{{ icons.close|raw }}</svg></button>
+            </div>
+
+            <div class="nax__body">
+                {% if profiles %}
+                    <div class="nax__group nax__group--profiles" role="group" aria-labelledby="{{ uid }}-profiles-title">
+                        <h3 class="nax__group-title" id="{{ uid }}-profiles-title">{{ 'profiles.title'|trans({}, domain, locale) }}</h3>
+                        <p class="nax__group-desc">{{ 'profiles.description'|trans({}, domain, locale) }}</p>
+                        <div class="nax__profiles">
+                            {% for profile in profiles %}
+                                <button type="button" class="nax__profile" aria-pressed="false" data-nax-profile="{{ profile.key }}" data-nax-set="{{ profile.settings|json_encode }}" aria-describedby="{{ uid }}-profile-{{ profile.key }}-desc{% if profile.settings.speak is defined %} {{ uid }}-profile-{{ profile.key }}-reason{% endif %}">
+                                    <span class="nax__profile-icon" aria-hidden="true">{{ svg_open|raw }}{{ icons[profile_icons[profile.key]]|raw }}</svg></span>
+                                    <span class="nax__profile-label">{{ ('profile.' ~ profile.key ~ '.label')|trans({}, domain, locale) }}</span>
+                                    <span class="nax__profile-check" aria-hidden="true">{{ svg_open|raw }}{{ icons.check|raw }}</svg></span>
+                                </button>
+                                <span class="nax__sr" id="{{ uid }}-profile-{{ profile.key }}-desc">{{ ('profile.' ~ profile.key ~ '.description')|trans({}, domain, locale) }}</span>
+                            {% endfor %}
+                        </div>
+                        {% for profile in profiles|filter(p => p.settings.speak is defined) %}
+                            {# Why this quick option cannot be used here (filled by the script). #}
+                            <p class="nax__reason" id="{{ uid }}-profile-{{ profile.key }}-reason" data-nax-speech-reason data-nax-format="{{ 'profiles.unavailable'|trans({}, domain, locale) }}" data-nax-label="{{ ('profile.' ~ profile.key ~ '.label')|trans({}, domain, locale) }}"{% for name, text in speech_reasons %} {{ name }}="{{ text }}"{% endfor %} hidden></p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% for group in groups %}
+                    <div class="nax__group" role="group" aria-labelledby="{{ uid }}-group-{{ group.key }}">
+                        <h3 class="nax__group-title" id="{{ uid }}-group-{{ group.key }}">{{ ('group.' ~ group.key)|trans({}, domain, locale) }}</h3>
+
+                        {% for feature in group.features %}
+                            {% if feature == 'font' %}
+                                <div class="nax__row nax__row--font" role="group" aria-labelledby="{{ uid }}-font-label">
+                                    <span class="nax__icon" aria-hidden="true">{{ svg_open|raw }}{{ icons.font|raw }}</svg></span>
+                                    <span class="nax__text">
+                                        <span class="nax__label" id="{{ uid }}-font-label">{{ 'font.label'|trans({}, domain, locale) }}</span>
+                                        <span class="nax__desc">{{ 'font.description'|trans({}, domain, locale) }}</span>
+                                    </span>
+                                    <span class="nax__stepper">
+                                        <button type="button" class="nax__step" data-nax-font="-1" aria-describedby="{{ uid }}-font-value" aria-disabled="true">
+                                            <span aria-hidden="true">A&minus;</span>
+                                            <span class="nax__sr">{{ 'font.decrease'|trans({}, domain, locale) }}</span>
+                                        </button>
+                                        <span class="nax__value" id="{{ uid }}-font-value" data-nax-fontval data-nax-format="{{ font_value }}">{{ font_value|replace({'{value}': '100'}) }}</span>
+                                        <button type="button" class="nax__step" data-nax-font="1" aria-describedby="{{ uid }}-font-value" aria-disabled="false">
+                                            <span aria-hidden="true">A+</span>
+                                            <span class="nax__sr">{{ 'font.increase'|trans({}, domain, locale) }}</span>
+                                        </button>
+                                    </span>
+                                </div>
+                            {% elseif feature == 'structure' %}
+                                <div class="nax__item">
+                                    <button type="button" class="nax__row nax__disclosure" data-nax-structure aria-expanded="false" aria-controls="{{ uid }}-structure" aria-describedby="{{ uid }}-structure-desc">
+                                        <span class="nax__icon" aria-hidden="true">{{ svg_open|raw }}{{ icons.structure|raw }}</svg></span>
+                                        <span class="nax__text">
+                                            <span class="nax__label">{{ 'structure.label'|trans({}, domain, locale) }}</span>
+                                            <span class="nax__desc" id="{{ uid }}-structure-desc">{{ 'structure.description'|trans({}, domain, locale) }}</span>
+                                        </span>
+                                        <span class="nax__chevron" aria-hidden="true">{{ svg_open|raw }}{{ icons.chevron|raw }}</svg></span>
+                                    </button>
+                                    {# Filled by the script each time it opens, from the page as it is then. #}
+                                    <div class="nax__structure" id="{{ uid }}-structure" data-nax-structure-list data-nax-texts="{{ structure_texts|json_encode }}" hidden></div>
+                                </div>
+                            {% else %}
+                                {% set speak = feature == 'speak' %}
+                                <div class="nax__item">
+                                    <button type="button" class="nax__row nax__switch" role="switch" aria-checked="false" data-nax-flag="{{ feature }}" aria-labelledby="{{ uid }}-{{ feature }}-label" aria-describedby="{{ uid }}-{{ feature }}-desc{% if speak %} {{ uid }}-speak-note {{ uid }}-speak-reason{% endif %}">
+                                        <span class="nax__icon" aria-hidden="true">{{ svg_open|raw }}{{ icons[feature]|raw }}</svg></span>
+                                        <span class="nax__text">
+                                            <span class="nax__label" id="{{ uid }}-{{ feature }}-label">{{ (feature ~ '.label')|trans({}, domain, locale) }}</span>
+                                            <span class="nax__desc" id="{{ uid }}-{{ feature }}-desc">{{ (feature ~ '.description')|trans({}, domain, locale) }}</span>
+                                            {% if speak %}
+                                                <span class="nax__note" id="{{ uid }}-speak-note">{{ (online_voices ? 'speak.note_online' : 'speak.note')|trans({}, domain, locale) }}</span>
+                                                {# Why read aloud cannot be used here (filled by the script). #}
+                                                <span class="nax__reason" id="{{ uid }}-speak-reason" data-nax-speech-reason{% for name, text in speech_reasons %} {{ name }}="{{ text }}"{% endfor %} hidden></span>
+                                            {% endif %}
+                                        </span>
+                                        <span class="nax__track" aria-hidden="true"><span class="nax__knob">{{ svg_open|raw }}{{ icons.check|raw }}</svg></span></span>
+                                    </button>
+                                    {% if speak %}
+                                        {# Shown while read aloud is on. data-nax-msg-again: the hint after a control was read (the next click uses it). #}
+                                        <div class="nax__speak" data-nax-speak-controls hidden data-nax-msg-reading="{{ 'speak.reading'|trans({}, domain, locale) }}" data-nax-msg-paused="{{ 'speak.paused'|trans({}, domain, locale) }}" data-nax-msg-stopped="{{ 'speak.stopped'|trans({}, domain, locale) }}" data-nax-msg-empty="{{ 'speak.empty'|trans({}, domain, locale) }}" data-nax-msg-again="{{ 'speak.again'|trans({}, domain, locale) }}">
+                                            <button type="button" class="nax__action" data-nax-speak="page">
+                                                {{ svg_open|raw }}{{ icons.play|raw }}</svg>
+                                                <span>{{ 'speak.page'|trans({}, domain, locale) }}</span>
+                                            </button>
+                                            <button type="button" class="nax__action" data-nax-speak="pause" aria-disabled="true" data-nax-label-pause="{{ 'speak.pause'|trans({}, domain, locale) }}" data-nax-label-resume="{{ 'speak.resume'|trans({}, domain, locale) }}">
+                                                {{ svg_open|raw }}{{ icons.pause|raw }}</svg>
+                                                <span data-nax-speak-label>{{ 'speak.pause'|trans({}, domain, locale) }}</span>
+                                            </button>
+                                            <button type="button" class="nax__action" data-nax-speak="stop" aria-disabled="true">
+                                                {{ svg_open|raw }}{{ icons.stop|raw }}</svg>
+                                                <span>{{ 'speak.stop'|trans({}, domain, locale) }}</span>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="nax__foot">
+                <button type="button" class="nax__action" data-nax-reset>
+                    {{ svg_open|raw }}{{ icons.reset|raw }}</svg>
+                    <span>{{ 'footer.reset'|trans({}, domain, locale) }}</span>
+                </button>
+                {% if statement_url %}
+                    <a class="nax__action nax__action--link" href="{{ statement_url }}"{% if statement_current %} aria-current="page"{% endif %}>
+                        {{ svg_open|raw }}{{ icons.statement|raw }}</svg>
+                        <span>{{ 'footer.statement'|trans({}, domain, locale) }}</span>
+                    </a>
+                {% endif %}
+                <button type="button" class="nax__action" data-nax-cookies hidden>
+                    {{ svg_open|raw }}{{ icons.cookies|raw }}</svg>
+                    <span>{{ 'footer.cookies'|trans({}, domain, locale) }}</span>
+                </button>
+            </div>
+
+            {# Polite announcements. Inside the dialog, never on its root. #}
+            <div class="nax__sr" role="status" data-nax-status
+                data-nax-msg-font="{{ 'font.status'|trans({}, domain, locale) }}"
+                data-nax-msg-reset="{{ 'footer.reset_done'|trans({}, domain, locale) }}"
+                data-nax-msg-on="{{ 'status.on'|trans({}, domain, locale) }}"
+                data-nax-msg-off="{{ 'status.off'|trans({}, domain, locale) }}"
+                data-nax-msg-replaced="{{ 'status.replaced'|trans({}, domain, locale) }}"
+                data-nax-msg-alt="{{ 'noimages.alt'|trans({}, domain, locale) }}"></div>
+        </div>
+    </div>
+{% endblock %}

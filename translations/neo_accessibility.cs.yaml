@@ -1,0 +1,138 @@
+# Texts for visitors of the accessibility panel. Words in braces ({value},
+# {count}, {label}, {alt}, {level}, {language}, {reason}) are replaced by the panel; keep them.
+# Override single texts in the website: translations/neo_accessibility.<lang>.yaml
+# of the project.
+button:
+    label: "Nastavení přístupnosti"
+    label_active: "Nastavení přístupnosti, zapnuto: {count}"
+link:
+    label: "Nastavení přístupnosti"
+panel:
+    title: "Přístupnost"
+    description: "Upravte si zobrazení tohoto webu."
+    close: "Zavřít"
+profiles:
+    title: "Rychlá volba"
+    description: "Každá zapne několik nastavení najednou. Dalším výběrem je zase vypnete."
+    unavailable: "{label}: {reason}"
+profile:
+    vision:
+        label: "Slabozrakost"
+        description: "Větší písmo, vysoký kontrast, velký ukazatel myši a zřetelný rámeček pro klávesnici."
+    dyslexia:
+        label: "Dyslexie"
+        description: "Písmo pro dyslektiky, větší mezery a text zarovnaný doleva."
+    concentration:
+        label: "Soustředění"
+        description: "Zastaví animace a ztmaví vše kromě řádků, které čtete."
+    epilepsy:
+        label: "Epilepsie"
+        description: "Zastaví animace a pohyblivé obrázky a ztlumí barvy."
+    motor:
+        label: "Motorika"
+        description: "Velký ukazatel myši a zřetelný rámeček pro ovládání klávesnicí."
+    reader:
+        label: "Předčítání"
+        description: "Klikněte na text a uslyšíte ho."
+group:
+    text: "Text a obsah"
+    colour: "Barvy"
+    orientation: "Orientace"
+font:
+    label: "Velikost písma"
+    description: "Zvětšení textu až na 150\u00A0%."
+    decrease: "Menší písmo"
+    increase: "Větší písmo"
+    value: "{value}\u00A0%"
+    status: "Velikost písma: {value}"
+typeface:
+    label: "Čitelné písmo"
+    description: "Jednoduché, jasné písmo vašeho zařízení."
+dyslexia:
+    label: "Písmo pro dyslektiky"
+    description: "Písmo, ve kterém se písmena snáze rozliší."
+readable:
+    label: "Větší mezery"
+    description: "Větší mezery mezi řádky, písmeny a slovy."
+align:
+    label: "Text doleva"
+    description: "Žádný text na střed ani do bloku, žádné dělení slov."
+headings:
+    label: "Zvýraznit nadpisy"
+    description: "Rámeček kolem každého nadpisu."
+links:
+    label: "Zvýraznit odkazy"
+    description: "Podtrhnout odkazy a orámovat tlačítka."
+noimages:
+    label: "Skrýt obrázky"
+    description: "Obrázky zmizí a místo nich se zobrazí jejich popis."
+    alt: "Obrázek: {alt}"
+cursor:
+    label: "Velký kurzor"
+    description: "Větší a lépe viditelný ukazatel myši."
+contrast:
+    label: "Vysoký kontrast"
+    description: "Černý text na bílém pozadí, podtržené odkazy."
+lowcontrast:
+    label: "Snížit kontrast"
+    description: "Jemnější, trochu tmavší barvy, které méně oslňují."
+lowsaturation:
+    label: "Ztlumit barvy"
+    description: "Zobrazit barvy bledší."
+grayscale:
+    label: "Odstíny šedi"
+    description: "Zobrazit stránku bez barev."
+motion:
+    label: "Zastavit animace"
+    description: "Zastavit animace, pohyblivé efekty a videa, která se spouštějí sama."
+focus:
+    label: "Výrazný fokus"
+    description: "Zřetelný rámeček ukazuje, kde se při ovládání klávesnicí nacházíte."
+guide:
+    label: "Čtecí linka"
+    description: "Linka sleduje ukazatel myši nebo klávesnici a pomáhá neztratit řádek."
+mask:
+    label: "Čtecí maska"
+    description: "Ztmaví stránku kromě pruhu kolem ukazatele myši nebo klávesnice."
+structure:
+    label: "Struktura stránky"
+    description: "Oblasti a nadpisy této stránky. Vyberte položku a přejdete na ni."
+    areas: "Oblasti"
+    headings: "Nadpisy"
+    empty: "Na této stránce nejsou."
+    level: "Úroveň {level}"
+landmark:
+    banner: "Záhlaví"
+    navigation: "Navigace"
+    main: "Hlavní obsah"
+    complementary: "Doplňující informace"
+    contentinfo: "Zápatí"
+    search: "Vyhledávání"
+    form: "Formulář"
+    region: "Oddíl"
+speak:
+    label: "Předčítání"
+    description: "Klikněte na text, a uslyšíte ho; odkaz nebo tlačítko se při prvním kliknutí přečte a při druhém použije. Klávesou Tab se přečte vše, na co přejdete."
+    note: "Používá hlas nainstalovaný ve vašem zařízení. Text zůstává ve vašem zařízení."
+    note_online: "Používá hlasy vašeho prohlížeče. Pokud zařízení nemá hlas pro daný jazyk, některé prohlížeče posílají text k přečtení online službě svého výrobce."
+    no_voice: "V tomto zařízení není nainstalován žádný hlas pro jazyk: {language}."
+    no_voice_browser: "Tento prohlížeč nemá hlas pro jazyk: {language}."
+    no_speech: "Tento prohlížeč neumí předčítat."
+    page: "Přečíst stránku"
+    pause: "Pozastavit"
+    resume: "Pokračovat"
+    stop: "Zastavit"
+    reading: "Předčítá se."
+    paused: "Pozastaveno."
+    stopped: "Předčítání ukončeno."
+    empty: "Na této stránce není text k přečtení."
+    again: "Pro použití klikněte nebo klepněte ještě jednou."
+status:
+    on: "{label}: zapnuto."
+    off: "{label}: vypnuto."
+    replaced: "Vypnuto: {label}."
+footer:
+    reset: "Obnovit vše"
+    reset_done: "Všechna nastavení byla obnovena."
+    statement: "Prohlášení o přístupnosti"
+    cookies: "Nastavení cookies"
